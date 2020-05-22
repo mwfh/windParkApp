@@ -1,0 +1,10 @@
+.root {
+    -fx-padding: 20px;
+    -fx-background-color: white;
+}
+
+#labeltitletext{
+    -fx-font: 20px Helvetica;
+    -fx-font-weight: bold;
+}
+
