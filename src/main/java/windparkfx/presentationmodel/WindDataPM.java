@@ -49,6 +49,8 @@ public class WindDataPM {
     //- Spezial Anzeige
     private final IntegerProperty anzKWGesamt     = new SimpleIntegerProperty();
     private final DoubleProperty totalMegaWatt    = new SimpleDoubleProperty();
+    private final DoubleProperty totalMegaWattAll    = new SimpleDoubleProperty();
+
 
     private final StringProperty imageCantonURL   = new SimpleStringProperty();
 
@@ -166,7 +168,7 @@ public class WindDataPM {
     public void calcNewMWSum()
     {
         setTotalMegaWatt((getMw15() + getMw16() + getMw17() + getMw18()));
-        System.out.println("Sum new MW: " + System.currentTimeMillis());
+        //System.out.println("Sum new MW: " + System.currentTimeMillis());
     }
 
     // Getter and Setter - Default Propertys
@@ -427,10 +429,19 @@ public class WindDataPM {
         this.isOnValue.set(isOnValue);
     }
 
+    public double getTotalMegaWattAll() {
+        return totalMegaWattAll.get();
+    }
 
+    public DoubleProperty totalMegaWattAllProperty() {
+        return totalMegaWattAll;
+    }
 
+    public void setTotalMegaWattAll(double totalMegaWattAll) {
+        this.totalMegaWattAll.set(totalMegaWattAll);
+    }
 
-    // Canton Image
+// Canton Image
 
     public String getImageCantonURL() {
         return imageCantonURL.get();

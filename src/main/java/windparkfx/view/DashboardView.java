@@ -90,7 +90,7 @@ public class DashboardView extends GridPane implements ViewMixin{
         add(titleCanton, 1, 2, 1, 1);
 
         add(titleInstalKW, 1, 4, 1, 1);
-        add(titleMWattTotal, 1, 5, 1,1);
+        add(titleMWattTotal, 1, 5, 2,1);
 
         //- Image
         add(imageView, 3, 1, 1,5);

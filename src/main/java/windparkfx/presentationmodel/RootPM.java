@@ -129,6 +129,32 @@ public class RootPM{
 
     }
 
+    public void refreshTitleArea()
+    {
+        countWindAll();
+        countWindAllKw();
+    }
+
+    public void countWindAll()
+    {
+        int allWind = wind_resultat.size();
+
+        windProxy.setAnzKWGesamt(allWind);
+        System.out.println("Finished countWindAll: " + allWind);
+    }
+    public void countWindAllKw()
+    {
+        double allWindKw = 0.0;
+        for(WindDataPM var : wind_resultat)
+        {
+            allWindKw += var.getMw15();
+            allWindKw += var.getMw16();
+            allWindKw += var.getMw17();
+            allWindKw += var.getMw18();
+        }
+        windProxy.setTotalMegaWattAll(allWindKw);
+        System.out.println("Finished countWindAllKW: " + allWindKw);
+    }
 
     public void refreshWindPerCantonList() {
         for(CantonDataPM canton : canton_resultat) {

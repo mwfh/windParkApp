@@ -43,6 +43,8 @@ public class SideListView extends VBox implements ViewMixin {
     public void layoutControls() {
 
         //HBox.setHgrow(hydroTable, Priority.ALWAYS);
+        setMinSize(300,600);
+        setMaxSize(1200,1500);
 
         setVgrow(windTable, Priority.ALWAYS);
         getChildren().addAll(windTable);

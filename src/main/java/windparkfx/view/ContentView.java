@@ -265,39 +265,48 @@ public class ContentView extends GridPane implements ViewMixin{
         //- ValueChangeListener ###########################
         input2015.textProperty()              .addListener((observable, oldValue, newValue) -> {
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
+
         });
 
         input2016.textProperty()              .addListener((observable, oldValue, newValue) -> {
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
         });
 
         input2017.textProperty()              .addListener((observable, oldValue, newValue) -> {
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
         });
 
         input2018.textProperty()              .addListener((observable, oldValue, newValue) -> {
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
         });
 
         //- KeyEvents ###########################
         input2015.setOnKeyReleased(event -> {
             System.out.println("in 2015");
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
         });
 
         input2016.setOnKeyReleased(event -> {
             System.out.println("in 2016");
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
         });
 
         input2017.setOnKeyReleased(event -> {
             System.out.println("in 2017");
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
         });
 
         input2018.setOnKeyReleased(event -> {
             System.out.println("in 2018");
             rootPM.getWindProxy().calcNewMWSum();
+            rootPM.refreshTitleArea();
         });
     }
 

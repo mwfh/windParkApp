@@ -31,6 +31,7 @@ public class RootPanel extends BorderPane implements ViewMixin {
     //private BottomListView      bottomListView;
 
     private DashboardView dashboardView;
+    private TitleBoardView titleBoardView;
 
     private SplitPane splitPane;
     private SplitPane splitPaneVertical;
@@ -67,16 +68,17 @@ public class RootPanel extends BorderPane implements ViewMixin {
 
         sideListView        = new SideListView(rootPM);
         contentView         = new ContentView(rootPM);
-//        bottomListView      = new BottomListView(rootPM);
-//        bottomListView.setMaxSize(Double.MAX_VALUE, 400);
+        //bottomListView      = new BottomListView(rootPM);
+       //bottomListView.setMaxSize(Double.MAX_VALUE, 400);
         dashboardView       = new DashboardView(rootPM);
+        titleBoardView      = new TitleBoardView(rootPM);
 
     }
 
     @Override
     public void layoutControls() {
         setStyle("-fx-background-color: #1D1D1D");
-        splitPane.getItems().addAll(sideListView, new VBox(dashboardView,contentView));
+        splitPane.getItems().addAll(new VBox(titleBoardView,sideListView), new VBox(dashboardView,contentView));
         //splitPaneVertical.getItems().addAll(splitPane,bottomListView);
         splitPaneVertical.getItems().addAll(splitPane);
         setTop(newHeaderView);

@@ -20,6 +20,17 @@
     -fx-text-fill: white;
 }
 
+#titleBoardTextApp{
+    -fx-background-color: #1D1D1D;
+    -fx-text-fill: white;
+    -fx-font: 40px Helvetica;
+}
+
+#titleBaordText{
+    -fx-background-color: #1D1D1D;
+    -fx-text-fill: white;
+    -fx-font: 20px Helvetica;
+}
 
 /*
  * Empty Stylesheet file.
