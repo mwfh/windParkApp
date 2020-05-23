@@ -139,7 +139,7 @@ public class HydroToolbar extends ToolBar implements ViewMixin {
     private TextField createTextField() {
         TextField textField = new TextField();
         textField.getStyleClass().add("textfield");
-        textField.setPromptText("Search");
+        textField.setPromptText('\uf00e' + " Search Communes ");
         return textField;
     }
 }
