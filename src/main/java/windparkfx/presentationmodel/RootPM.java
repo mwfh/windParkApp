@@ -29,7 +29,7 @@ import java.util.stream.Stream;
  */
 
 public class RootPM{
-    private final StringProperty applicationTitle = new SimpleStringProperty("Windkraftwerke aus der Schweiz");
+    private final StringProperty applicationTitle = new SimpleStringProperty("Schweizer Windparks");
    // private final StringProperty greeting         = new SimpleStringProperty("Hello World!");
 
     //- FILES:
@@ -130,7 +130,6 @@ public class RootPM{
     }
 
 
-
     public void refreshWindPerCantonList() {
         for(CantonDataPM canton : canton_resultat) {
             //- init countvalue
@@ -169,83 +168,6 @@ public class RootPM{
             canton.setAnzKWGesamt(anzahlWinds);
         }
     }
-
-
-
-
-    //- -------------------------------------------------------------------------
-    //- Hydro-Data behandeln ####################################################
-//
-//    private List<HydroDataPM> Hydro_readFromFile() {
-//        try (Stream<String> stream = getStreamOfLines(FILE_NAME_MAIN)) {
-//            return stream.skip(1)                                              // erste Zeile ist die Headerzeile; ueberspringen
-//                    .map(line -> new HydroDataPM(line.split(DELIMITER, 14))) // aus jeder Zeile ein Objekt machen
-//                    .collect(Collectors.toList());                        // alles aufsammeln
-//        }
-//    }
-//
-//    public void hydro_save() {
-//        //System.out.println("Datei Hydro wird versucht zu schreiben");
-//        try (BufferedWriter writer = Files.newBufferedWriter(getPath(FILE_NAME_MAIN))) {
-//            writer.write("ENTITY_ID;NAME;TYPE;SITE;CANTON;MAX_WATER_VOLUME_M3_S;MAX_POWER_MW;START_OF_OPERATION_FIRST;START_OF_OPERATION_LAST;LATITUDE;LONGITUDE;STATUS;WATERBODIES;IMAGE_URL");
-//            writer.newLine();
-//            hydro_resultat.stream()
-//                    .map(hydro_resultat -> hydro_resultat.Hydro_InfoAsLine(DELIMITER))
-//                    .forEach(line -> {
-//                        try {
-//                            writer.write(line);
-//                            writer.newLine();
-//                        } catch (IOException e) {
-//                            throw new IllegalStateException(e);
-//                        }
-//                    });
-//            showInfoDialog("Daten Speicherung", "Alle Wasserwerke wurden gespeichert.");
-//        } catch (IOException e) {
-//            throw new IllegalStateException("save failed");
-//        }
-//    }
-//
-//
-//    public ObservableList<HydroDataPM> getHydro_result() {
-//        return hydro_resultat;
-//    }
-
-//    public void hydro_add(int last_id)
-//    {
-//        int new_id = hydro_resultat.size();
-//        HydroDataPM newHydro = new HydroDataPM(new_id);
-//        getHydro_result().add(newHydro);
-//        setSelectHydroId(new_id);
-//
-//        redoStack.clear();
-//        undoStack.add(0, new AddCommand(this, newHydro, hydro_resultat.size() - 1));
-//        showInfoDialog("Neues Kraftwerk", "Kraftwerk wurde hinzugefügt");
-//    }
-
-//    public void hydro_delete()
-//    {
-//        HydroDataPM hydrosel = hydro_resultat.stream().filter(hydro -> hydro.getId() == getSelectHydroId()).findFirst().get();
-//        int currentPosition = hydro_resultat.indexOf(hydrosel);
-//
-//        removeFromList(hydrosel);
-//        redoStack.clear();
-//        undoStack.add(0, new RemoveCommand(this, hydrosel, currentPosition));
-//
-//        showInfoDialog("Kraftwerk Änderung", "Das Kraftwerk <" +hydrosel.getName()+ "> wurde gelöscht");
-//    }
-//
-//    public void load_first_hydro_entry()
-//    {
-//        setSelectHydroId(getHydro_result().stream()
-//                .sorted(Comparator.comparingInt(value -> value.getId()))
-//                .mapToInt(value -> value.getId())
-//                .min()
-//                .getAsInt());
-//
-//    }
-
-    //- Hydro-Data behandeln ####################################################
-    //- -------------------------------------------------------------------------
 
     //- -------------------------------------------------------------------------
     //- Canton-Data behandeln ####################################################
@@ -562,42 +484,6 @@ public class RootPM{
     }
 
 
-    // Hydro ########################################################
-//    public HydroDataPM getHydroSelect(int id) {
-//        return hydro_resultat.stream()
-//                .filter(HydroPM -> HydroPM.getId() == id)
-//                .findAny().orElse(null);
-//    }
-//
-//
-//    public int getSelectHydroId() {
-//        return selectHydroId.get();
-//    }
-//
-//    public IntegerProperty selectHydroIdProperty() {
-//        return selectHydroId;
-//    }
-//
-//    public void setSelectHydroId(int selectHydroId) {
-//        this.selectHydroId.set(selectHydroId);
-//    }
-//
-//    public int getSelectCantonId() {
-//        return selectCantonId.get();
-//    }
-//
-//    public ObservableList<HydroDataPM> getHydro_resultat() {
-//        return hydro_resultat;
-//    }
-//
-//    public HydroDataPM getHydroProxy() {
-//        return hydroProxy;
-//    }
-//
-//    public void setHydroProxy(HydroDataPM hydroProxy) {
-//        this.hydroProxy = hydroProxy;
-//    }
-    
     // Wind ########################################################
     public WindDataPM getWindSelect(int id) {
         return wind_resultat.stream()

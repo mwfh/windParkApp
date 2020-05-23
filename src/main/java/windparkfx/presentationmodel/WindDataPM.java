@@ -3,6 +3,7 @@ package windparkfx.presentationmodel;
 import javafx.beans.property.*;
 import javafx.scene.image.ImageView;
 
+
 /**
  * @author Mario Wettstein
  */
@@ -20,7 +21,7 @@ public class WindDataPM {
     // COMPLETION: 2016;
     private final IntegerProperty constructFinish = new SimpleIntegerProperty();
     // INSTALLED_POWER_KW: 37200;
-    private final IntegerProperty kwIstall         = new SimpleIntegerProperty();
+    private final DoubleProperty kwIstall         = new SimpleDoubleProperty();
     // PRODUCTION_2015_MWH: 56951;
     private final DoubleProperty mw15 = new SimpleDoubleProperty();
     // PRODUCTION_2016_MWH: 57171;
@@ -47,7 +48,9 @@ public class WindDataPM {
 
     //- Spezial Anzeige
     private final IntegerProperty anzKWGesamt     = new SimpleIntegerProperty();
-    private final DoubleProperty totalMegaWatt = new SimpleDoubleProperty();
+    private final DoubleProperty totalMegaWatt    = new SimpleDoubleProperty();
+
+    private final StringProperty imageCantonURL   = new SimpleStringProperty();
 
     private WindDataImagePM image;
     private ImageView imageView;
@@ -80,15 +83,16 @@ public class WindDataPM {
         // COMPLETION: 2016;
         setConstructFinish(line[4].equals("") ? 0 : Integer.valueOf(line[4]));
         // INSTALLED_POWER_KW: 37200;
-        setKwIstall(line[5].equals("") ? 0 : Integer.valueOf(line[5]));
+        setKwIstall(line[5].equals("") ? 0.00 : Double.valueOf(line[5]));
+
         // PRODUCTION_2015_MWH: 56951;
-        setMw15(line[6].equals("") ? 0 : Double.valueOf(line[6]));
+        setMw15(line[6].equals("") ? 0.00 : Double.valueOf(line[6]));
         // PRODUCTION_2016_MWH: 57171;
-        setMw16(line[7].equals("") ? 0 : Double.valueOf(line[7]));
+        setMw16(line[7].equals("") ? 0.00 : Double.valueOf(line[7]));
         // PRODUCTION_2017_MWH: 74041;
-        setMw17(line[8].equals("") ? 0 : Double.valueOf(line[8]));
+        setMw17(line[8].equals("") ? 0.00 : Double.valueOf(line[8]));
         // PRODUCTION_2018_MWH: 66967;
-        setMw18(line[9].equals("") ? 0 : Double.valueOf(line[9]));
+        setMw18(line[9].equals("") ? 0.00 : Double.valueOf(line[9]));
         // COUNT: 16;
         setCount(line[10].equals("") ? 0 : Integer.valueOf(line[10]));
         // TYPE: Vestas V90-2MW (12x), Vestas V112-3.3MW (4x);
@@ -97,6 +101,8 @@ public class WindDataPM {
         setCommunes(line[12]);
         // CANTON: BE;
         setCanton(line[13]);
+        setImageCantonURL(line[13]);
+
         // LATITUDE: 47.175833;
         setLatitude(line[14].equals("") ? 0 : Double.valueOf(line[14]));
         // LONGITUDE: 7.018889;
@@ -105,7 +111,7 @@ public class WindDataPM {
         setImageUrl(line[16]);
 
         //Total MWatt
-        setTotalMegaWatt(getMw15() + getMw16() + getMw17() + getMw18());
+        setTotalMegaWatt((getMw15() + getMw16() + getMw17() + getMw18()));
     }
 
     public String windInfoAsLine(String delimiter) {
@@ -115,7 +121,7 @@ public class WindDataPM {
                 getStatus(),
                 Integer.toString(getConstructStart()),
                 Integer.toString(getConstructFinish()),
-                Integer.toString(getKwIstall()),
+                Double.toString(getKwIstall()),
                 Double.toString(getMw15()),
                 Double.toString(getMw16()),
                 Double.toString(getMw17()),
@@ -145,6 +151,23 @@ public class WindDataPM {
         return new ImageView(image.getImage());
     }
 
+    //- Image Load Canton Image
+    public ImageView getCantonImageView() {
+        if (imageCantonURL.getValue() == null || imageCantonURL.getValue().equals("")) {
+            image = new WindDataImagePM(new String(getClass().getResource("/images/cantons/switzerland.png").toString()));
+        } else {
+            //- Image Pfad gefunden --> Image mit Pfad erstellen
+            image = new WindDataImagePM(getImageCantonURL());
+        }
+
+        return new ImageView(image.getImage());
+    }
+
+    public void calcNewMWSum()
+    {
+        setTotalMegaWatt((getMw15() + getMw16() + getMw17() + getMw18()));
+        System.out.println("Sum new MW: " + System.currentTimeMillis());
+    }
 
     // Getter and Setter - Default Propertys
     public int getId() {
@@ -207,15 +230,15 @@ public class WindDataPM {
         this.constructFinish.set(constructFinish);
     }
 
-    public int getKwIstall() {
+    public double getKwIstall() {
         return kwIstall.get();
     }
 
-    public IntegerProperty kwIstallProperty() {
+    public DoubleProperty kwIstallProperty() {
         return kwIstall;
     }
 
-    public void setKwIstall(int kwIstall) {
+    public void setKwIstall(double kwIstall) {
         this.kwIstall.set(kwIstall);
     }
 
@@ -351,6 +374,8 @@ public class WindDataPM {
         this.imageUrl.set(imageUrl);
     }
 
+
+
     // Special Getter and Setter
 
 
@@ -400,5 +425,81 @@ public class WindDataPM {
 
     public void setIsOnValue(boolean isOnValue) {
         this.isOnValue.set(isOnValue);
+    }
+
+
+
+
+    // Canton Image
+
+    public String getImageCantonURL() {
+        return imageCantonURL.get();
+    }
+
+    public StringProperty imageCantonURLProperty() {
+        return imageCantonURL;
+    }
+
+    public void setImageCantonURL(String imageCantonURL) {
+        switch (imageCantonURL) {
+            case "ZH":  this.imageCantonURL.set("/images/cantons/zuerich.png");
+                break;
+            case "BE":  this.imageCantonURL.set("/images/cantons/bern.png");
+                break;
+            case "LU":  this.imageCantonURL.set("/images/cantons/luzern.png");
+                break;
+            case "UR":  this.imageCantonURL.set("/images/cantons/uri.png");
+                break;
+            case "SZ":  this.imageCantonURL.set("/images/cantons/schwyz.png");
+                break;
+            case "OW":  this.imageCantonURL.set("/images/cantons/obwalden.png");
+                break;
+            case "NW":  this.imageCantonURL.set("/images/cantons/nidwalden.png");
+                break;
+            case "GL":  this.imageCantonURL.set("/images/cantons/glarus.png");
+                break;
+            case "ZG":  this.imageCantonURL.set("/images/cantons/zug.png");
+                break;
+            case "FR":  this.imageCantonURL.set("/images/cantons/freiburg.png");
+                break;
+            case "SO":  this.imageCantonURL.set("/images/cantons/solothurn.png");
+                break;
+            case "BS":  this.imageCantonURL.set("/images/cantons/basel-stadt.png");
+                break;
+            case "BL":  this.imageCantonURL.set("/images/cantons/basel-landschaft.png");
+                break;
+            case "SH":  this.imageCantonURL.set("/images/cantons/schaffhausen.png");
+                break;
+            case "AR":  this.imageCantonURL.set("/images/cantons/appenzell_ausserrhoden.png");
+                break;
+            case "AI":  this.imageCantonURL.set("/images/cantons/appenzell_innerrhoden.png");
+                break;
+            case "SG":  this.imageCantonURL.set("/images/cantons/st_gallen.png");
+                break;
+            case "GR":  this.imageCantonURL.set("/images/cantons/graubuenden.png");
+                break;
+            case "AG":  this.imageCantonURL.set("/images/cantons/aargau.png");
+                break;
+            case "TG":  this.imageCantonURL.set("/images/cantons/thurgau.png");
+                break;
+            case "TI":  this.imageCantonURL.set("/images/cantons/tessin.png");
+                break;
+            case "VD":  this.imageCantonURL.set("/images/cantons/waadt.png");
+                break;
+            case "VS":  this.imageCantonURL.set("/images/cantons/wallis.png");
+                break;
+            case "NE":  this.imageCantonURL.set("/images/cantons/neuenburg.png");
+                break;
+            case "GE":  this.imageCantonURL.set("/images/cantons/genf.png");
+                break;
+            case "JU":  this.imageCantonURL.set("/images/cantons/jura.png");
+                break;
+
+            default: this.imageCantonURL.set("/images/cantons/switzerland.png");
+                break;
+        }
+
+
+        //this.imageCantonURL.set(imageCantonURL);
     }
 }

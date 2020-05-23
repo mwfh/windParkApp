@@ -1,13 +1,12 @@
 package windparkfx.view;
 
+import javafx.util.converter.NumberStringConverter;
 import windparkfx.presentationmodel.RootPM;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.util.converter.NumberStringConverter;
 
 /**
  * @author Mario Wettstein
@@ -16,47 +15,47 @@ import javafx.util.converter.NumberStringConverter;
 public class ContentView extends GridPane implements ViewMixin{
     private final RootPM rootPM;
 
-    //- Lable
-    private Label titleKwName;
-    private Label titleOrtName;
-    private Label titleOrtKanton;
-    private Label titleMWatt;
-    private Label titleYear;
+    //- Label Matrix Left Column
+    private Label labelLocation;
+    private Label labelCommun;
+    private Label labelInstalKW;
+    private Label labelLatitude;
+    private Label labelConstructStart;
+    private Label labelCount;
+    private Label labelType;
+    private Label label2015;
+    private Label label2017;
+    private Label labelImageURL;
 
-    //- Label Matrix
-    private Label labName;
-    private Label labOrt;
-    private Label labWassermenge;
-    private Label labInBetriebSeit;
-    private Label labBreitengrad;
-    private Label labStatus;
-    private Label labGenGew;
-    private Label labImgUrl;
-
-    private Label labTyp;
-    private Label labKanton;
-    private Label labLeistung;
-    private Label labLetztSeit;
-    private Label labLaengegrad;
-
-    //- Input Matrix
-    private TextField inpName;
-    private TextField inpOrt;
-    private TextField inpWassermenge;
-    private TextField inpInBetriebSeit;
-    private TextField inpBreitengrad;
-    private TextField inpStatus;
-    private TextField inpGenGew;
-    private TextField inpImgUrl;
-    private TextField inpTyp;
-    private TextField inpKanton;
-    private TextField inpLeistung;
-    private TextField inpLetztSeit;
-    private TextField inpLaengegrad;
+    //- Label Matrix Right Column
+    private Label labelCanton;
+    private Label labelStatus;
+    private Label labelLongitude;
+    private Label labelConstructFinished;
+    private Label label2016;
+    private Label label2018;
 
 
-    //- Image
-    private ImageView imageView;
+
+    //- Input Matrix Left Column
+    private TextField inputLocation;
+    private TextField inputCommun;
+    private TextField inputInstallKW;
+    private TextField inputLatitude;
+    private TextField inputConstructStart;
+    private TextField inputCount;
+    private TextField inputType;
+    private TextField input2015;
+    private TextField input2017;
+    private TextField inputImageURL;
+
+    //- Input Matrix Right Column
+    private TextField inputCanton;
+    private TextField inputStatus;
+    private TextField inputLongitude;
+    private TextField inputConstructFinished;
+    private TextField input2016;
+    private TextField input2018;
 
 
     public ContentView(RootPM model) {
@@ -74,48 +73,81 @@ public class ContentView extends GridPane implements ViewMixin{
     public void initializeControls() {
 
         //imgView = new ImageView();
-        setStyle("-fx-background-color:white");
+        setStyle("-fx-background-color:#1D1D1D;");
 
-        titleKwName     = new Label();
-        titleKwName.setId("labeltitletext");
-        titleOrtName    = new Label();
-        titleOrtKanton  = new Label();
-        titleMWatt      = new Label();
-        titleYear       = new Label();
 
-        //- Label Matrix
-        labName             = new Label("Name*");
-        labOrt              = new Label("Standort");
-        labWassermenge      = new Label("Massermenge");
-        labInBetriebSeit    = new Label("Inbetriebnahme");
-        labBreitengrad      = new Label("Breitengrad");
-        labStatus           = new Label("Status");
-        labGenGew           = new Label("Genutzte Gewässer");
-        labImgUrl           = new Label("Image URL");
+        //- Label Matrix left Column
+        labelLocation           = new Label("Standort");
+        labelLocation.setId("labelcontenttext");
 
-        labTyp              = new Label("Typ");
-        labKanton           = new Label("Kanton");
-        labLeistung         = new Label("Leistung(MW)");
-        labLetztSeit        = new Label("Letzte Inbetriebnahme");
-        labLaengegrad       = new Label("Längengrad");
+        labelCommun             = new Label("Gemeinde");
+        labelCommun.setId("labelcontenttext");
 
-        //- Input Matrix
-        inpName             = new TextField();
-        inpOrt              = new TextField();
-        inpWassermenge      = new TextField();
-        inpInBetriebSeit    = new TextField();
-        inpBreitengrad      = new TextField();
-        inpStatus           = new TextField();
-        inpGenGew           = new TextField();
-        inpImgUrl           = new TextField();
+        labelInstalKW           = new Label("Leistung (kW)");
+        labelInstalKW.setId("labelcontenttext");
 
-        inpTyp              = new TextField();
-        inpKanton           = new TextField();
-        inpLeistung         = new TextField();
-        inpLetztSeit        = new TextField();
-        inpLaengegrad       = new TextField();
+        labelLatitude           = new Label("Breitengrad");
+        labelLatitude.setId("labelcontenttext");
 
-        imageView = new ImageView();
+        labelConstructStart     = new Label("Baubeginn");
+        labelConstructStart.setId("labelcontenttext");
+
+        labelCount              = new Label("Windräder");
+        labelCount.setId("labelcontenttext");
+
+        labelType               = new Label("Anlagetyp");
+        labelType.setId("labelcontenttext");
+
+        label2015               = new Label("Produktion 2015 (MWh)");
+        label2015.setId("labelcontenttext");
+
+        label2017               = new Label("Produktion 2017 (MWh)");
+        label2017.setId("labelcontenttext");
+
+        labelImageURL           = new Label("Bild");
+        labelImageURL.setId("labelcontenttext");
+
+
+        //- Label Matrix right Column
+        labelCanton             = new Label("Kanton");
+        labelCanton.setId("labelcontenttext");
+
+        labelStatus             = new Label("Status");
+        labelStatus.setId("labelcontenttext");
+
+        labelLongitude          = new Label("Längengrad");
+        labelLongitude.setId("labelcontenttext");
+
+        labelConstructFinished  = new Label("Fertigstellung");
+        labelConstructFinished.setId("labelcontenttext");
+
+        label2016               = new Label("Produktion 2016 (MWh)");
+        label2016.setId("labelcontenttext");
+
+        label2018               = new Label("Produktion 2019 (MWh)");
+        label2018.setId("labelcontenttext");
+
+
+        //- Input Matrix left Column
+        inputLocation           = new TextField();
+        inputCommun             = new TextField();
+        inputInstallKW          = new TextField();
+        inputLatitude           = new TextField();
+        inputConstructStart     = new TextField();
+        inputCount              = new TextField();
+        inputType               = new TextField();
+        input2015               = new TextField();
+        input2017               = new TextField();
+        inputImageURL           = new TextField();
+
+        //- Input Matrix right Column
+        inputCanton             = new TextField();
+        inputStatus             = new TextField();
+        inputLongitude          = new TextField();
+        inputConstructFinished  = new TextField();
+        input2016               = new TextField();
+        input2018               = new TextField();
+
 
 
         //setGridLinesVisible(true); //- Grind einblenden
@@ -123,149 +155,131 @@ public class ContentView extends GridPane implements ViewMixin{
 
     @Override
     public void layoutControls() {
-        ColumnConstraints Space                 = new ColumnConstraints(10,10, Double.MAX_VALUE);
-        ColumnConstraints Column1Label          = new ColumnConstraints(120,120, Double.MAX_VALUE);
-        ColumnConstraints Column2Label          = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints Column3SpezInpSpace   = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints Column4SpezInpSpace   = new ColumnConstraints(40,40, Double.MAX_VALUE);
-        ColumnConstraints Column5Input          = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints Column6Label          = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints Column7SpezInpSpace   = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints Column8Input          = new ColumnConstraints(100,100, Double.MAX_VALUE);
+        ColumnConstraints spaceColumn           = new ColumnConstraints(10,10, Double.MAX_VALUE);
+        ColumnConstraints columnLabelLeft       = new ColumnConstraints(180,200, Double.MAX_VALUE);
+        ColumnConstraints columnSpaceLeft       = new ColumnConstraints(20,20, Double.MAX_VALUE);
+        ColumnConstraints columnInputLeft       = new ColumnConstraints(130,220, Double.MAX_VALUE);
+        ColumnConstraints columnSpaceMiddle     = new ColumnConstraints(20,20, Double.MAX_VALUE);
+        ColumnConstraints columnLabelRight      = new ColumnConstraints(180,200, Double.MAX_VALUE);
+        ColumnConstraints columnSpaceRight      = new ColumnConstraints(20,20, Double.MAX_VALUE);
+        ColumnConstraints columnInputRight      = new ColumnConstraints(130,220, Double.MAX_VALUE);
 
-        setMinSize(830,500);
-        setMaxSize(1000,1200);
-        getColumnConstraints().addAll(Space,Column1Label, Column2Label, Column3SpezInpSpace, Column4SpezInpSpace,
-                Column5Input, Column6Label, Column7SpezInpSpace, Column8Input, Space);
+        setMinSize(600,400);
+        setMaxSize(1200,1200);
+        getColumnConstraints().addAll(spaceColumn,columnLabelLeft, columnSpaceLeft, columnInputLeft, columnSpaceMiddle, columnLabelRight, columnSpaceRight, columnInputRight, spaceColumn);
 
 
-        RowConstraints Row1HLabel           = new RowConstraints(50,50, Double.MAX_VALUE);
-        RowConstraints Row2HLabel           = new RowConstraints(50,50, Double.MAX_VALUE);
-        RowConstraints Row3HLabel           = new RowConstraints(50,50, Double.MAX_VALUE);
-        RowConstraints Row4HLabel           = new RowConstraints(50,50, Double.MAX_VALUE);
-        RowConstraints Row5HSpace           = new RowConstraints(80,80, Double.MAX_VALUE);
+        RowConstraints spaceRow   = new RowConstraints(10,10, Double.MAX_VALUE);
+        RowConstraints row01      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row02      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row03      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row04      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row05      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row06      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row07      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row08      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row09      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row10      = new RowConstraints(40,40, Double.MAX_VALUE);
 
-        RowConstraints Row6InputMatrix      = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints Row7InputMatrix      = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints Row8InputMatrix      = new RowConstraints(50,50, Double.MAX_VALUE);
-        RowConstraints Row9InputMatrix      = new RowConstraints(50,50, Double.MAX_VALUE);
-        RowConstraints Row10InputMatrix     = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints Row11nputMatrix      = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints Row12nputMatrix      = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints Row13InputMatrix     = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints Row14InputMatrix     = new RowConstraints(40,40, Double.MAX_VALUE);
+        getRowConstraints().addAll(spaceRow, row01, row02, row03, row04, row05, row06, row07, row08, row09, row10 ,spaceRow);
 
-        getRowConstraints().addAll(Row1HLabel, Row2HLabel, Row3HLabel, Row4HLabel, Row5HSpace,
-                Row6InputMatrix, Row7InputMatrix, Row8InputMatrix, Row9InputMatrix,
-                Row10InputMatrix,Row11nputMatrix, Row12nputMatrix, Row13InputMatrix, Row14InputMatrix);
+        //- Content Label left Column #########################################
+        add(labelLocation,          1,1,1,1);
+        add(labelCommun,            1,2,1,1);
+        add(labelInstalKW,          1,3,1,1);
+        add(labelLatitude,          1,4,1,1);
+        add(labelConstructStart,    1,5,1,1);
+        add(labelCount,             1,6,1,1);
+        add(labelType,              1,7,1,1);
+        add(label2015,              1,8,1,1);
+        add(label2017,              1,9,1,1);
+        add(labelImageURL,          1,10,1,1);
 
-        //- Head
-        add(titleKwName, 1, 0, 4, 1);
+        //- Content Input left Column #########################################
+        add(inputLocation,          3,1,1,1);
+        add(inputCommun,            3,2,5,1);
+        add(inputInstallKW,         3,3,1,1);
+        add(inputLatitude,          3,4,1,1);
+        add(inputConstructStart,    3,5,1,1);
+        add(inputCount,             3,6,1,1);
+        add(inputType,              3,7,5,1);
+        add(input2015,              3,8,1,1);
+        add(input2017,              3,9,1,1);
+        add(inputImageURL,          3,10,5,1);
 
-        //add(labOrt, 1,1,1,1);
-        add(titleOrtName, 1, 1, 4, 1);
+        //- Content Label right Column #########################################
+        add(labelCanton,            5,1,1,1);
+        // --> Input from right Column (inputCommun)
+        add(labelStatus,            5,3,1,1);
+        add(labelLongitude,         5,4,1,1);
+        add(labelConstructFinished, 5,5,1,1);
+        // --> Space
+        // --> Input from right Column (inputType)
+        add(label2016,              5,8,1,1);
+        add(label2018,              5,9,1,1);
+        // --> Input from right Column (inputImageURL)
 
-        add(titleOrtKanton, 1, 2, 1, 1);
-        add(titleMWatt, 1, 3, 1,1);
-        add(titleYear, 1, 4, 1,1);
-
-        //- Image
-        add(imageView, 6, 1, 2,4);
-
-        //- Content
-        add(labName, 1, 6, 1,1);
-        add(labOrt, 1, 7, 1,1);
-        add(labWassermenge, 1, 8, 1,1);
-        add(labInBetriebSeit, 1, 9, 1,1);
-        add(labBreitengrad, 1, 10, 1,1);
-        add(labStatus, 1, 11, 1,1);
-        add(labGenGew, 1, 12, 1,1);
-        add(labImgUrl, 1, 13, 1,1);
-
-        add(labTyp, 5, 6, 2,1);
-        add(labKanton, 5, 7, 2,1);
-        add(labLeistung, 5, 8, 2,1);
-        add(labLetztSeit, 5, 9, 2,1);
-        add(labLaengegrad, 5, 10, 2,1);
-
-        add(inpName, 2, 6, 2,1);
-        add(inpOrt, 2, 7, 2,1);
-
-        add(inpWassermenge, 2, 8, 1,1);
-
-        add(inpInBetriebSeit, 2, 9, 1,1);
-
-
-        add(inpBreitengrad, 2, 10, 1,1);
-        add(inpStatus, 2, 11, 2,1);
-        add(inpGenGew, 2, 12, 2,1);
-        add(inpImgUrl, 2, 13, 4,1);
-
-        add(inpTyp, 7, 6, 2,1);
-        add(inpKanton, 7, 7, 2,1);
-        add(inpLeistung, 7, 8, 2,1);
-
-        add(inpLetztSeit, 7, 9, 2,1);
-        add(inpLaengegrad, 7, 10, 2,1);
-
+        //- Content Input right Column  #######################################
+        add(inputCanton,            7,1,1,1);
+        // --> Input from right Column (inputCommun)
+        add(inputStatus,            7,3,1,1);
+        add(inputLongitude,         7,4,1,1);
+        add(inputConstructFinished, 7,5,1,1);
+        // --> Space
+        // --> Input from right Column (inputType)
+        add(input2016,              7,8,1,1);
+        add(input2018,              7,9,1,1);
 
     }
 
     @Override
     public void setupBindings() {
 
-//        titleKwName.textProperty()              .bind(rootPM.getHydroProxy().nameProperty());
-//        titleOrtName.textProperty()             .bind(rootPM.getHydroProxy().siteProperty());
-//        titleOrtKanton.textProperty()           .bind(rootPM.getHydroProxy().cantonProperty());
-//        titleMWatt.textProperty()               .bind(rootPM.getHydroProxy().maxMWattPowerProperty());
-//        titleYear.textProperty()                .bind(rootPM.getHydroProxy().firstStartDatProperty().asString());
-//
-//        //- Input Matrix
-//        inpName.textProperty()                  .bindBidirectional(rootPM.getHydroProxy().nameProperty());
-//        inpOrt.textProperty()                   .bindBidirectional(rootPM.getHydroProxy().siteProperty());
-//
-//        inpWassermenge.textProperty()         .bindBidirectional(rootPM.getHydroProxy().maxWaterVolProperty(), new NumberStringConverter());
-//
-//        inpInBetriebSeit.textProperty()         .bindBidirectional(rootPM.getHydroProxy().firstStartDatProperty(), new NumberStringConverter());
-//
-//        inpBreitengrad.textProperty()           .bindBidirectional(rootPM.getHydroProxy().latitudeProperty(), new NumberStringConverter());
-//        inpStatus.textProperty()                .bindBidirectional(rootPM.getHydroProxy().statusProperty());
-//        inpGenGew.textProperty()                .bindBidirectional(rootPM.getHydroProxy().waterbodiesProperty());
-//        inpImgUrl.textProperty()                .bindBidirectional(rootPM.getHydroProxy().imageUrlProperty());
-//
-//        inpTyp.textProperty()                   .bindBidirectional(rootPM.getHydroProxy().typeProperty());
-//        inpKanton.textProperty()                .bindBidirectional(rootPM.getHydroProxy().cantonProperty());
-//
-//
-//        inpLeistung.textProperty()              .bindBidirectional(rootPM.getHydroProxy().maxMWattPowerProperty());
-//        inpLetztSeit.textProperty()           .bindBidirectional(rootPM.getHydroProxy().lastStartDatProperty(), new NumberStringConverter());
-//
-//        inpLaengegrad.textProperty()            .bindBidirectional(rootPM.getHydroProxy().longitudeProperty(), new NumberStringConverter());
-//
-//        //- Image Input
-//        imageView.setFitHeight(280);
-//        imageView.setFitWidth(320);
-//        imageView.imageProperty()               .bind(rootPM.getHydroProxy().getImageView().imageProperty());
+        //- Input Matrix right Column
+        inputLocation.textProperty()              .bindBidirectional(rootPM.getWindProxy().locationNameProperty());
+        inputCommun.textProperty()              .bindBidirectional(rootPM.getWindProxy().communesProperty());
+        inputCanton.textProperty()              .bindBidirectional(rootPM.getWindProxy().cantonProperty());
+        inputInstallKW.textProperty()           .bindBidirectional(rootPM.getWindProxy().kwIstallProperty(), new NumberStringConverter());
+        inputLatitude.textProperty()            .bindBidirectional(rootPM.getWindProxy().latitudeProperty(), new NumberStringConverter());
+        inputConstructStart.textProperty()      .bindBidirectional(rootPM.getWindProxy().constructStartProperty(), new NumberStringConverter());
+        inputCount.textProperty()               .bindBidirectional(rootPM.getWindProxy().countProperty(), new NumberStringConverter());
+        inputType.textProperty()                .bindBidirectional(rootPM.getWindProxy().typeProperty());
+        input2015.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw15Property(), new NumberStringConverter());
+        input2017.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw17Property(), new NumberStringConverter());
+        inputImageURL.textProperty()            .bindBidirectional(rootPM.getWindProxy().imageUrlProperty());
+
+        //- Input Matrix left Column
+        inputCanton.textProperty()              .bindBidirectional(rootPM.getWindProxy().cantonProperty());
+        inputStatus.textProperty()              .bindBidirectional(rootPM.getWindProxy().statusProperty());
+        inputLongitude.textProperty()           .bindBidirectional(rootPM.getWindProxy().longitudeProperty(), new NumberStringConverter());
+        inputConstructFinished.textProperty()   .bindBidirectional(rootPM.getWindProxy().constructFinishProperty(), new NumberStringConverter());
+        input2016.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw16Property(), new NumberStringConverter());
+        input2018.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw18Property(), new NumberStringConverter());
 
     }
 
     @Override
     public void setupEventHandlers() {
-        inpKanton.textProperty()                .addListener((observable, oldValue, newValue) -> {
-            rootPM.getWindProxy()              .setCanton(newValue);
-            rootPM.refreshWindPerCantonList();
+
+        input2015.textProperty()              .addListener((observable, oldValue, newValue) -> {
+           // rootPM.getWindProxy()              .setMw15(Double.valueOf(newValue));
+            rootPM.getWindProxy().calcNewMWSum();
         });
 
-//        inpLeistung.textProperty()              .addListener((observable, oldValue, newValue) -> {
-//            rootPM.getWindProxy()               .setTotalMegaWatt(newValue);
-//            rootPM.refreshWindPerCantonList();
-//        });
-
-        inpImgUrl.textProperty()                .addListener((observable, oldValue, newValue) -> {
-            imageView.imageProperty()           .unbind();
-            imageView.imageProperty()           .bind(rootPM.getWindProxy().getImageView().imageProperty());
+        input2016.textProperty()              .addListener((observable, oldValue, newValue) -> {
+           // rootPM.getWindProxy()              .setMw16(Double.valueOf(newValue));
+            rootPM.getWindProxy().calcNewMWSum();
         });
 
+        input2017.textProperty()              .addListener((observable, oldValue, newValue) -> {
+           // rootPM.getWindProxy()              .setMw17(Double.valueOf(newValue));
+            rootPM.getWindProxy().calcNewMWSum();
+        });
+
+        input2018.textProperty()              .addListener((observable, oldValue, newValue) -> {
+           // rootPM.getWindProxy()              .setMw18(Double.valueOf(newValue));
+            rootPM.getWindProxy().calcNewMWSum();
+        });
     }
 
 

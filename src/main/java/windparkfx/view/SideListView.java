@@ -1,5 +1,6 @@
 package windparkfx.view;
 
+import javafx.scene.image.ImageView;
 import windparkfx.presentationmodel.RootPM;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,6 +17,9 @@ public class SideListView extends VBox implements ViewMixin {
 
     private TableView<WindDataPM> windTable;
 
+    //- Image
+    private ImageView imageView;
+
     public SideListView(RootPM model) {
         this.rootPM = model;
         init();
@@ -28,6 +32,9 @@ public class SideListView extends VBox implements ViewMixin {
 
     @Override
     public void initializeControls() {
+        // Image init
+        imageView = new ImageView();
+
         windTable = initializeResultatTabelle();
         windTable.setEditable(true);
     }
@@ -36,13 +43,13 @@ public class SideListView extends VBox implements ViewMixin {
     public void layoutControls() {
 
         //HBox.setHgrow(hydroTable, Priority.ALWAYS);
+
         setVgrow(windTable, Priority.ALWAYS);
         getChildren().addAll(windTable);
     }
 
     @Override
     public void setupBindings() {
-
     }
 
     @Override
@@ -57,16 +64,28 @@ public class SideListView extends VBox implements ViewMixin {
         idKW.setCellValueFactory(cell -> cell.getValue().idProperty().asString());
 
         //- Init von Kraftwerk Locationname Spalte
-        TableColumn<WindDataPM, String> locName = new TableColumn<>("Location Name");
+        TableColumn<WindDataPM, String> locName = new TableColumn<>("Standort");
         locName.setCellValueFactory(cell -> cell.getValue().locationNameProperty());
+
+        //- Init von Kanton Kanton Spalte
+        TableColumn<WindDataPM, String> nameCanton = new TableColumn<>("Kanton");
+        nameCanton.setCellValueFactory(cell -> cell.getValue().cantonProperty());
+
+        //- Init von Gemeinde Spalte
+        TableColumn<WindDataPM, String> nameCommunes = new TableColumn<>("Gemeinde");
+        nameCommunes.setCellValueFactory(cell -> cell.getValue().communesProperty());
 
         //- Init von Kraftwerk Status Spalte
         TableColumn<WindDataPM, String> state = new TableColumn<>("Status");
         state.setCellValueFactory(cell -> cell.getValue().statusProperty());
 
-        //- Init von Kanton Kanton Spalte
-        TableColumn<WindDataPM, String> nameCanton = new TableColumn<>("Kanton");
-        nameCanton.setCellValueFactory(cell -> cell.getValue().cantonProperty());
+//        //- Init von Kanton Image
+//        TableColumn<WindDataPM, ImageView> imageCanton = new TableColumn<>("Wappen");
+//        imageCanton.setCellValueFactory(cell -> cell.getValue().getCantonImageView();
+
+        //- Init von MW 15
+        TableColumn<WindDataPM, String> leistungKW = new TableColumn<>("Leistung (kw)");
+        leistungKW.setCellValueFactory(cell -> cell.getValue().kwIstallProperty().asString());
 
         //- Init von MW 15
         TableColumn<WindDataPM, String> megaWatt15 = new TableColumn<>("MW 2015");
@@ -89,9 +108,9 @@ public class SideListView extends VBox implements ViewMixin {
         megaWattTotal.setCellValueFactory(cell -> cell.getValue().totalMegaWattProperty().asString());
 
         //- Spalten aneinander reihen
-        tableView.getColumns().addAll(idKW,locName, nameCanton, state , megaWatt15, megaWatt16, megaWatt17, megaWatt18, megaWattTotal);
+        tableView.getColumns().addAll(locName, nameCanton, nameCommunes, leistungKW, state , megaWatt15, megaWatt16, megaWatt17, megaWatt18, megaWattTotal);
         tableView.setItems(rootPM.getWindListFilter());
-        tableView.getSortOrder().setAll(locName);
+        tableView.getSortOrder().setAll(nameCanton);
 
         return tableView;
     }
@@ -116,7 +135,7 @@ public class SideListView extends VBox implements ViewMixin {
             windTable.getSelectionModel().select(wind);
 
             //- Scroll to Selected
-            //hydroTable.scrollTo(hydro);
+            //windTable.scrollTo(wind);
         });
 
         //- Search
