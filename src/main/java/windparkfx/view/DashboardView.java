@@ -1,5 +1,6 @@
 package windparkfx.view;
 
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -104,8 +105,8 @@ public class DashboardView extends GridPane implements ViewMixin{
 
         titleVillage.textProperty()                 .bind(rootPM.getWindProxy().communesProperty());
         titleCanton.textProperty()                  .bind(rootPM.getWindProxy().cantonProperty());
-        titleInstalKW.textProperty()                .bind(rootPM.getWindProxy().kwIstallProperty().asString());
-        titleMWattTotal.textProperty()              .bind(rootPM.getWindProxy().totalMegaWattProperty().asString());
+        titleInstalKW.textProperty()                .bind(Bindings.concat(rootPM.getWindProxy().kwIstallProperty().asString(), " kW"));
+        titleMWattTotal.textProperty()              .bind(Bindings.concat(rootPM.getWindProxy().totalMegaWattProperty().asString(), " MWh"));
         titleImgUrl.textProperty()                  .bind(rootPM.getWindProxy().imageUrlProperty());
 
         //- Image Input

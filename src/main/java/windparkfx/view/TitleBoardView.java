@@ -1,5 +1,6 @@
 package windparkfx.view;
 
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -90,7 +91,7 @@ public class TitleBoardView extends GridPane implements ViewMixin{
     @Override
     public void setupBindings() {
         labelAllWind.textProperty()             .bind(rootPM.getWindProxy().anzKWGesamtProperty().asString());
-        labelAllWindKW.textProperty()           .bind(rootPM.getWindProxy().totalMegaWattAllProperty().asString());
+        labelAllWindKW.textProperty()           .bind(Bindings.concat(rootPM.getWindProxy().totalMegaWattAllProperty().asString()," MWh"));
     }
 
     @Override
