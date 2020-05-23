@@ -230,6 +230,7 @@ public class CantonDataPM {
 
     //- Spezial Werte
 
+
     public int getAnzKWGesamt() {
         return anzKWGesamt.get();
     }
@@ -253,6 +254,4 @@ public class CantonDataPM {
     public void setTotalKWWatt(double totalKWWatt) {
         this.totalKWWatt.set(totalKWWatt);
     }
-
-
 }

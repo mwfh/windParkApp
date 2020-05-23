@@ -214,56 +214,56 @@ public class ContentView extends GridPane implements ViewMixin{
     @Override
     public void setupBindings() {
 
-        titleKwName.textProperty()              .bind(rootPM.getHydroProxy().nameProperty());
-        titleOrtName.textProperty()             .bind(rootPM.getHydroProxy().siteProperty());
-        titleOrtKanton.textProperty()           .bind(rootPM.getHydroProxy().cantonProperty());
-        titleMWatt.textProperty()               .bind(rootPM.getHydroProxy().maxMWattPowerProperty());
-        titleYear.textProperty()                .bind(rootPM.getHydroProxy().firstStartDatProperty().asString());
-
-        //- Input Matrix
-        inpName.textProperty()                  .bindBidirectional(rootPM.getHydroProxy().nameProperty());
-        inpOrt.textProperty()                   .bindBidirectional(rootPM.getHydroProxy().siteProperty());
-
-        inpWassermenge.textProperty()         .bindBidirectional(rootPM.getHydroProxy().maxWaterVolProperty(), new NumberStringConverter());
-
-        inpInBetriebSeit.textProperty()         .bindBidirectional(rootPM.getHydroProxy().firstStartDatProperty(), new NumberStringConverter());
-
-        inpBreitengrad.textProperty()           .bindBidirectional(rootPM.getHydroProxy().latitudeProperty(), new NumberStringConverter());
-        inpStatus.textProperty()                .bindBidirectional(rootPM.getHydroProxy().statusProperty());
-        inpGenGew.textProperty()                .bindBidirectional(rootPM.getHydroProxy().waterbodiesProperty());
-        inpImgUrl.textProperty()                .bindBidirectional(rootPM.getHydroProxy().imageUrlProperty());
-
-        inpTyp.textProperty()                   .bindBidirectional(rootPM.getHydroProxy().typeProperty());
-        inpKanton.textProperty()                .bindBidirectional(rootPM.getHydroProxy().cantonProperty());
-
-
-        inpLeistung.textProperty()              .bindBidirectional(rootPM.getHydroProxy().maxMWattPowerProperty());
-        inpLetztSeit.textProperty()           .bindBidirectional(rootPM.getHydroProxy().lastStartDatProperty(), new NumberStringConverter());
-
-        inpLaengegrad.textProperty()            .bindBidirectional(rootPM.getHydroProxy().longitudeProperty(), new NumberStringConverter());
-
-        //- Image Input
-        imageView.setFitHeight(280);
-        imageView.setFitWidth(320);
-        imageView.imageProperty()               .bind(rootPM.getHydroProxy().getImageView().imageProperty());
+//        titleKwName.textProperty()              .bind(rootPM.getHydroProxy().nameProperty());
+//        titleOrtName.textProperty()             .bind(rootPM.getHydroProxy().siteProperty());
+//        titleOrtKanton.textProperty()           .bind(rootPM.getHydroProxy().cantonProperty());
+//        titleMWatt.textProperty()               .bind(rootPM.getHydroProxy().maxMWattPowerProperty());
+//        titleYear.textProperty()                .bind(rootPM.getHydroProxy().firstStartDatProperty().asString());
+//
+//        //- Input Matrix
+//        inpName.textProperty()                  .bindBidirectional(rootPM.getHydroProxy().nameProperty());
+//        inpOrt.textProperty()                   .bindBidirectional(rootPM.getHydroProxy().siteProperty());
+//
+//        inpWassermenge.textProperty()         .bindBidirectional(rootPM.getHydroProxy().maxWaterVolProperty(), new NumberStringConverter());
+//
+//        inpInBetriebSeit.textProperty()         .bindBidirectional(rootPM.getHydroProxy().firstStartDatProperty(), new NumberStringConverter());
+//
+//        inpBreitengrad.textProperty()           .bindBidirectional(rootPM.getHydroProxy().latitudeProperty(), new NumberStringConverter());
+//        inpStatus.textProperty()                .bindBidirectional(rootPM.getHydroProxy().statusProperty());
+//        inpGenGew.textProperty()                .bindBidirectional(rootPM.getHydroProxy().waterbodiesProperty());
+//        inpImgUrl.textProperty()                .bindBidirectional(rootPM.getHydroProxy().imageUrlProperty());
+//
+//        inpTyp.textProperty()                   .bindBidirectional(rootPM.getHydroProxy().typeProperty());
+//        inpKanton.textProperty()                .bindBidirectional(rootPM.getHydroProxy().cantonProperty());
+//
+//
+//        inpLeistung.textProperty()              .bindBidirectional(rootPM.getHydroProxy().maxMWattPowerProperty());
+//        inpLetztSeit.textProperty()           .bindBidirectional(rootPM.getHydroProxy().lastStartDatProperty(), new NumberStringConverter());
+//
+//        inpLaengegrad.textProperty()            .bindBidirectional(rootPM.getHydroProxy().longitudeProperty(), new NumberStringConverter());
+//
+//        //- Image Input
+//        imageView.setFitHeight(280);
+//        imageView.setFitWidth(320);
+//        imageView.imageProperty()               .bind(rootPM.getHydroProxy().getImageView().imageProperty());
 
     }
 
     @Override
     public void setupEventHandlers() {
         inpKanton.textProperty()                .addListener((observable, oldValue, newValue) -> {
-            rootPM.getHydroProxy()              .setCanton(newValue);
-            rootPM.refreshHydrosPerCantonList();
+            rootPM.getWindProxy()              .setCanton(newValue);
+            rootPM.refreshWindPerCantonList();
         });
 
-        inpLeistung.textProperty()              .addListener((observable, oldValue, newValue) -> {
-            rootPM.getHydroProxy()              .setMaxMWattPower(newValue);
-            rootPM.refreshHydrosPerCantonList();
-        });
+//        inpLeistung.textProperty()              .addListener((observable, oldValue, newValue) -> {
+//            rootPM.getWindProxy()               .setTotalMegaWatt(newValue);
+//            rootPM.refreshWindPerCantonList();
+//        });
 
         inpImgUrl.textProperty()                .addListener((observable, oldValue, newValue) -> {
             imageView.imageProperty()           .unbind();
-            imageView.imageProperty()           .bind(rootPM.getHydroProxy().getImageView().imageProperty());
+            imageView.imageProperty()           .bind(rootPM.getWindProxy().getImageView().imageProperty());
         });
 
     }

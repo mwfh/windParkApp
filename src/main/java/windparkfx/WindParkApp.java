@@ -31,7 +31,7 @@ public class WindParkApp extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		rootPM.load_first_hydro_entry();
+		rootPM.load_first_wind_entry();
 
 
 		//- Customer - Control

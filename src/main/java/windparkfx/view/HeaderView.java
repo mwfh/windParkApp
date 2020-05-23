@@ -122,16 +122,16 @@ public class HeaderView extends GridPane implements ViewMixin{
 
     @Override
     public void setupEventHandlers() {
-        save.setOnAction(event -> rootPM.hydro_save());
+        save.setOnAction(event -> rootPM.wind_save());
 
-        add.setOnAction(event -> rootPM.hydro_add(rootPM.getHydro_result().stream()
+        add.setOnAction(event -> rootPM.wind_add(rootPM.getWind_result().stream()
                                                     .sorted(Comparator.comparingInt(value -> value.getId()))
                                                     .mapToInt(value -> value.getId())
                                                     .max()
                                                     .getAsInt()));
 
 
-        delete.setOnAction(event -> rootPM.hydro_delete());
+        delete.setOnAction(event -> rootPM.wind_delete());
 
         back.setOnAction(event -> rootPM.undo());
 

@@ -89,13 +89,13 @@ public class HydroToolbar extends ToolBar implements ViewMixin {
 
     @Override
     public void setupEventHandlers() {
-        saveButton.setOnAction(event -> rootPM.hydro_save());
-        addNewButton.setOnAction(event -> rootPM.hydro_add(rootPM.getHydro_result().stream()
+        saveButton.setOnAction(event -> rootPM.wind_save());
+        addNewButton.setOnAction(event -> rootPM.wind_add(rootPM.getWind_result().stream()
                                             .sorted(Comparator.comparingInt(value -> value.getId()))
                                             .mapToInt(value -> value.getId())
                                             .max()
                                             .getAsInt()));
-        deleteButton.setOnAction(event -> rootPM.hydro_delete());
+        deleteButton.setOnAction(event -> rootPM.wind_delete());
 
         // TODO: Implement all button handlers bellow
         undoButton.setOnAction(event -> rootPM.undo());

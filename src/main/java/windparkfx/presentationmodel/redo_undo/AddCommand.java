@@ -1,7 +1,7 @@
 package windparkfx.presentationmodel.redo_undo;
 
-import windparkfx.presentationmodel.HydroDataPM;
 import windparkfx.presentationmodel.RootPM;
+import windparkfx.presentationmodel.WindDataPM;
 
 import static javafx.application.Application.launch;
 
@@ -11,10 +11,10 @@ import static javafx.application.Application.launch;
 public class AddCommand implements Command {
 
 	private final RootPM rootPM;
-	private final HydroDataPM added;
+	private final WindDataPM added;
 	private final int       position;
 
-	public AddCommand(RootPM rootPM, HydroDataPM added, int position) {
+	public AddCommand(RootPM rootPM, WindDataPM added, int position) {
 		this.rootPM = rootPM;
 		this.added = added;
 		this.position = position;
