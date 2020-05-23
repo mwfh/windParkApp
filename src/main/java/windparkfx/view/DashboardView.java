@@ -112,7 +112,6 @@ public class DashboardView extends GridPane implements ViewMixin{
         imageView.setFitHeight(280);
         imageView.setFitWidth(320);
         imageView.imageProperty()               .bind(rootPM.getWindProxy().getImageView().imageProperty());
-
     }
 
     @Override
