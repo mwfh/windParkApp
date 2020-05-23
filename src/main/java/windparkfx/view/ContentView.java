@@ -15,6 +15,7 @@ import javafx.scene.layout.RowConstraints;
 public class ContentView extends GridPane implements ViewMixin{
     private final RootPM rootPM;
 
+
     //- Label Matrix Left Column
     private Label labelLocation;
     private Label labelCommun;
@@ -261,23 +262,41 @@ public class ContentView extends GridPane implements ViewMixin{
     @Override
     public void setupEventHandlers() {
 
+        //- ValueChangeListener ###########################
         input2015.textProperty()              .addListener((observable, oldValue, newValue) -> {
-           // rootPM.getWindProxy()              .setMw15(Double.valueOf(newValue));
             rootPM.getWindProxy().calcNewMWSum();
         });
 
         input2016.textProperty()              .addListener((observable, oldValue, newValue) -> {
-           // rootPM.getWindProxy()              .setMw16(Double.valueOf(newValue));
             rootPM.getWindProxy().calcNewMWSum();
         });
 
         input2017.textProperty()              .addListener((observable, oldValue, newValue) -> {
-           // rootPM.getWindProxy()              .setMw17(Double.valueOf(newValue));
             rootPM.getWindProxy().calcNewMWSum();
         });
 
         input2018.textProperty()              .addListener((observable, oldValue, newValue) -> {
-           // rootPM.getWindProxy()              .setMw18(Double.valueOf(newValue));
+            rootPM.getWindProxy().calcNewMWSum();
+        });
+
+        //- KeyEvents ###########################
+        input2015.setOnKeyReleased(event -> {
+            System.out.println("in 2015");
+            rootPM.getWindProxy().calcNewMWSum();
+        });
+
+        input2016.setOnKeyReleased(event -> {
+            System.out.println("in 2016");
+            rootPM.getWindProxy().calcNewMWSum();
+        });
+
+        input2017.setOnKeyReleased(event -> {
+            System.out.println("in 2017");
+            rootPM.getWindProxy().calcNewMWSum();
+        });
+
+        input2018.setOnKeyReleased(event -> {
+            System.out.println("in 2018");
             rootPM.getWindProxy().calcNewMWSum();
         });
     }
