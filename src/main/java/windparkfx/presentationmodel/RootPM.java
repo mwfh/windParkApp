@@ -127,9 +127,10 @@ public class RootPM{
         windProxy.longitudeProperty()      .bindBidirectional(newWindSelection.longitudeProperty());
         windProxy.imageUrlProperty()       .bindBidirectional(newWindSelection.imageUrlProperty());
 
+        refreshDataOverview();
     }
 
-    public void refreshTitleArea()
+    public void refreshDataOverview()
     {
         countWindAll();
         countWindAllKw();
@@ -145,6 +146,7 @@ public class RootPM{
     public void countWindAllKw()
     {
         double allWindKw = 0.0;
+
         for(WindDataPM var : wind_resultat)
         {
             allWindKw += var.getMw15();
