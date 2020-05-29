@@ -421,7 +421,7 @@ public class GummibaerenDashboard extends Region {
         setProduction3checked(true);
         setProduction4checked(true);
 
-
+        //rootPM.setStyleChoose("styleday.css");
     }
 
     private void initializeDrawingPane() {
@@ -541,7 +541,7 @@ public class GummibaerenDashboard extends Region {
         //ToDo: durch die Listener auf die Properties des Custom Controls ersetzen
 
         // fuer die getaktete Animation
-        blinking.addListener((observable, oldValue, newValue) -> startClockedAnimation(newValue));
+      //  blinking.addListener((observable, oldValue, newValue) -> startClockedAnimation(newValue));
         onProperty().addListener((observable, oldValue, newValue) -> updateUI());
 
         //- ValueChangeListener ###########################

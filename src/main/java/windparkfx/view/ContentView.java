@@ -180,8 +180,8 @@ public class ContentView extends GridPane implements ViewMixin{
         RowConstraints row06      = new RowConstraints(40,40, Double.MAX_VALUE);
         RowConstraints row07      = new RowConstraints(40,40, Double.MAX_VALUE);
 
-        // RowConstraints row08      = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints row08      = new RowConstraints(140,90, Double.MAX_VALUE);
+        RowConstraints row08      = new RowConstraints(40,40, Double.MAX_VALUE);
+        //RowConstraints row08      = new RowConstraints(140,90, Double.MAX_VALUE);
 
         RowConstraints row09      = new RowConstraints(40,40, Double.MAX_VALUE);
         RowConstraints row10      = new RowConstraints(40,40, Double.MAX_VALUE);
@@ -196,8 +196,8 @@ public class ContentView extends GridPane implements ViewMixin{
         add(labelConstructStart,    1,5,1,1);
         add(labelCount,             1,6,1,1);
         add(labelType,              1,7,1,1);
-//        add(label2015,              1,8,1,1);
-//        add(label2017,              1,9,1,1);
+        add(label2015,              1,8,1,1);
+        add(label2017,              1,9,1,1);
         add(labelImageURL,          1,10,1,1);
 
         //- Content Input left Column #########################################
@@ -208,8 +208,8 @@ public class ContentView extends GridPane implements ViewMixin{
         add(inputConstructStart,    3,5,1,1);
         add(inputCount,             3,6,1,1);
         add(inputType,              3,7,5,1);
-//        add(input2015,              3,8,1,1);
-//        add(input2017,              3,9,1,1);
+        add(input2015,              3,8,1,1);
+        add(input2017,              3,9,1,1);
         add(inputImageURL,          3,10,5,1);
 
         //- Content Label right Column #########################################
@@ -220,8 +220,8 @@ public class ContentView extends GridPane implements ViewMixin{
         add(labelConstructFinished, 5,5,1,1);
         // --> Space
         // --> Input from right Column (inputType)
-//        add(label2016,              5,8,1,1);
-//        add(label2018,              5,9,1,1);
+        add(label2016,              5,8,1,1);
+        add(label2018,              5,9,1,1);
         // --> Input from right Column (inputImageURL)
 
         //- Content Input right Column  #######################################
@@ -232,11 +232,11 @@ public class ContentView extends GridPane implements ViewMixin{
         add(inputConstructFinished, 7,5,1,1);
         // --> Space
         // --> Input from right Column (inputType)
-//        add(input2016,              7,8,1,1);
-//        add(input2018,              7,9,1,1);
+        add(input2016,              7,8,1,1);
+        add(input2018,              7,9,1,1);
 
         //- GummibaerenDashboard
-        add(gummibaerenDashboard,              1,8,7,2);
+        //add(gummibaerenDashboard,              1,8,7,2);
 
     }
 

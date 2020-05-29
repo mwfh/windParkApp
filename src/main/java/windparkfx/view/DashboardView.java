@@ -7,6 +7,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import windparkfx.presentationmodel.RootPM;
+import windparkfx.view.gummibaerenDashboard.GummibaerenDashboard;
 
 /**
  * @author Mario Wettstein
@@ -25,6 +26,8 @@ public class DashboardView extends GridPane implements ViewMixin{
     //- Image
     private ImageView imageView;
 
+    //- gummibaerenDashboard
+    private GummibaerenDashboard gummibaerenDashboard;
 
     public DashboardView(RootPM model) {
         this.rootPM = model;
@@ -58,19 +61,21 @@ public class DashboardView extends GridPane implements ViewMixin{
 
         imageView =         new ImageView();
 
+        gummibaerenDashboard = new GummibaerenDashboard(rootPM);
 
        //setGridLinesVisible(true); //- Grind einblenden
     }
 
     @Override
     public void layoutControls() {
-        ColumnConstraints Space                 = new ColumnConstraints(10,10, Double.MAX_VALUE);
-        ColumnConstraints colHead01             = new ColumnConstraints(250,250, Double.MAX_VALUE);
-        ColumnConstraints colHead02             = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints colHead03             = new ColumnConstraints(328,328, Double.MAX_VALUE);
+        ColumnConstraints Space                         = new ColumnConstraints(10,10, Double.MAX_VALUE);
+        ColumnConstraints colHead01                     = new ColumnConstraints(250,250, Double.MAX_VALUE);
+        ColumnConstraints colHead02                     = new ColumnConstraints(100,100, Double.MAX_VALUE);
+        ColumnConstraints colHead03                     = new ColumnConstraints(328,328, Double.MAX_VALUE);
 
-        setMinSize(600,300);
-        setMaxSize(1200,500);
+        //setMinSize(600,300);
+        setMinSize(600,500);
+        setMaxSize(1200,800);
         getColumnConstraints().addAll(Space,colHead01, colHead02, colHead03, Space);
 
         RowConstraints SpaceTop           = new RowConstraints(10,10, Double.MAX_VALUE);
@@ -80,8 +85,10 @@ public class DashboardView extends GridPane implements ViewMixin{
         RowConstraints rowHead04           = new RowConstraints(35,35, Double.MAX_VALUE);
         RowConstraints rowHead05           = new RowConstraints(35,35, Double.MAX_VALUE);
 
+        RowConstraints gummibaerenRow             = new RowConstraints(190,190, Double.MAX_VALUE);
 
-        getRowConstraints().addAll(SpaceTop, rowHead01, rowHead02, rowHead03, rowHead04, rowHead05, SpaceTop);
+        //getRowConstraints().addAll(SpaceTop, rowHead01, rowHead02, rowHead03, rowHead04, rowHead05, SpaceTop);
+        getRowConstraints().addAll(SpaceTop, rowHead01, rowHead02, rowHead03, rowHead04, rowHead05, SpaceTop, gummibaerenRow, SpaceTop);
 
         //- Head
         add(titleVillage, 1, 1, 2, 1);
@@ -95,7 +102,8 @@ public class DashboardView extends GridPane implements ViewMixin{
         //- Image
         add(imageView, 3, 1, 1,5);
 
-
+        //- Gummibaeren Dashboard
+        add(gummibaerenDashboard, 1, 7,3 , 1);
 
     }
 

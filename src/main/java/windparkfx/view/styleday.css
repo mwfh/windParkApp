@@ -17,7 +17,7 @@
 }
 
 .root-panel-split-pane {
-    -fx-background-color: -day-root-panel-color;
+    /*-fx-background-color: -day-root-panel-color;*/
 }
 
 .header-toolbar {

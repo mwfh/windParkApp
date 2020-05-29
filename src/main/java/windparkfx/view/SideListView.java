@@ -7,6 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import windparkfx.presentationmodel.WindDataPM;
+import windparkfx.view.gummibaerenDashboard.GummibaerenDashboard;
 
 /**
  * @author Mario Wettstein
@@ -19,6 +20,9 @@ public class SideListView extends VBox implements ViewMixin {
 
     //- Image
     private ImageView imageView;
+
+    //- GummibaerenDashboard
+    GummibaerenDashboard gummibaerenDashboard;
 
     public SideListView(RootPM model) {
         this.rootPM = model;
@@ -37,6 +41,9 @@ public class SideListView extends VBox implements ViewMixin {
         // Image init
         imageView = new ImageView();
 
+        //- GummibaerenDashboard
+        gummibaerenDashboard = new GummibaerenDashboard(rootPM);
+
         windTable = initializeResultatTabelle();
         windTable.setEditable(true);
     }
@@ -45,11 +52,12 @@ public class SideListView extends VBox implements ViewMixin {
     public void layoutControls() {
 
         //HBox.setHgrow(hydroTable, Priority.ALWAYS);
-        setMinSize(300,600);
+        setMinSize(300,650);
         setMaxSize(1200,1500);
 
         setVgrow(windTable, Priority.ALWAYS);
         getChildren().addAll(windTable);
+        //getChildren().addAll(windTable, gummibaerenDashboard);
     }
 
     @Override

@@ -85,8 +85,8 @@ public class RootPanel extends BorderPane implements ViewMixin {
     @Override
     public void layoutControls() {
         splitPane.getItems().addAll(new VBox(titleBoardView,sideListView), new VBox(dashboardView,contentView));
-        //splitPaneVertical.getItems().addAll(splitPane);
-        splitPaneVertical.getItems().addAll(splitPane,gummibaerenDashboard);
+        splitPaneVertical.getItems().addAll(splitPane);
+        //splitPaneVertical.getItems().addAll(splitPane,gummibaerenDashboard);
 
         setTop(newHeaderView);
         setCenter(splitPaneVertical);
