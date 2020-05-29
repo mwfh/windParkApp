@@ -16,6 +16,10 @@
     -fx-background-color: -day-root-panel-color;
 }
 
+.root-panel-split-pane {
+    -fx-background-color: -day-root-panel-color;
+}
+
 .header-toolbar {
     -fx-background-color: -day-root-panel-color;
 }

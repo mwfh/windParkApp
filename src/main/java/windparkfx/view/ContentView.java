@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import windparkfx.view.gummibaerenDashboard.GummibaerenDashboard;
 
 /**
  * @author Mario Wettstein
@@ -58,6 +59,7 @@ public class ContentView extends GridPane implements ViewMixin{
     private TextField input2016;
     private TextField input2018;
 
+    private GummibaerenDashboard gummibaerenDashboard;
 
     public ContentView(RootPM model) {
         this.rootPM = model;
@@ -67,66 +69,64 @@ public class ContentView extends GridPane implements ViewMixin{
 
     @Override
     public void initializeSelf() {
-        addStylesheetFiles("style.css");
+//        addStylesheetFiles("style.css");
+        addStylesheetFiles(rootPM.getStyleChoose());
+        getStyleClass().add("content-view");
     }
 
     @Override
     public void initializeControls() {
 
-        //imgView = new ImageView();
-        setStyle("-fx-background-color:#1D1D1D;");
-
-
         //- Label Matrix left Column
         labelLocation           = new Label("Standort");
-        labelLocation.setId("labelcontenttext");
+        labelLocation.getStyleClass().add("label-content-text");
 
         labelCommun             = new Label("Gemeinde");
-        labelCommun.setId("labelcontenttext");
+        labelCommun.getStyleClass().add("label-content-text");
 
         labelInstalKW           = new Label("Leistung (kW)");
-        labelInstalKW.setId("labelcontenttext");
+        labelInstalKW.getStyleClass().add("label-content-text");
 
         labelLatitude           = new Label("Breitengrad");
-        labelLatitude.setId("labelcontenttext");
+        labelLatitude.getStyleClass().add("label-content-text");
 
         labelConstructStart     = new Label("Baubeginn");
-        labelConstructStart.setId("labelcontenttext");
+        labelConstructStart.getStyleClass().add("label-content-text");
 
         labelCount              = new Label("Windräder");
-        labelCount.setId("labelcontenttext");
+        labelCount.getStyleClass().add("label-content-text");
 
         labelType               = new Label("Anlagetyp");
-        labelType.setId("labelcontenttext");
+        labelType.getStyleClass().add("label-content-text");
 
         label2015               = new Label("Produktion 2015 (MWh)");
-        label2015.setId("labelcontenttext");
+        label2015.getStyleClass().add("label-content-text");
 
         label2017               = new Label("Produktion 2017 (MWh)");
-        label2017.setId("labelcontenttext");
+        label2017.getStyleClass().add("label-content-text");
 
         labelImageURL           = new Label("Bild");
-        labelImageURL.setId("labelcontenttext");
+        labelImageURL.getStyleClass().add("label-content-text");
 
 
         //- Label Matrix right Column
         labelCanton             = new Label("Kanton");
-        labelCanton.setId("labelcontenttext");
+        labelCanton.getStyleClass().add("label-content-text");
 
         labelStatus             = new Label("Status");
-        labelStatus.setId("labelcontenttext");
+        labelStatus.getStyleClass().add("label-content-text");
 
         labelLongitude          = new Label("Längengrad");
-        labelLongitude.setId("labelcontenttext");
+        labelLongitude.getStyleClass().add("label-content-text");
 
         labelConstructFinished  = new Label("Fertigstellung");
-        labelConstructFinished.setId("labelcontenttext");
+        labelConstructFinished.getStyleClass().add("label-content-text");
 
         label2016               = new Label("Produktion 2016 (MWh)");
-        label2016.setId("labelcontenttext");
+        label2016.getStyleClass().add("label-content-text");
 
         label2018               = new Label("Produktion 2019 (MWh)");
-        label2018.setId("labelcontenttext");
+        label2018.getStyleClass().add("label-content-text");
 
 
         //- Input Matrix left Column
@@ -149,7 +149,8 @@ public class ContentView extends GridPane implements ViewMixin{
         input2016               = new TextField();
         input2018               = new TextField();
 
-
+        //- gummibaerenDashboard
+        gummibaerenDashboard    = new GummibaerenDashboard(rootPM);
 
         //setGridLinesVisible(true); //- Grind einblenden
     }
@@ -178,7 +179,10 @@ public class ContentView extends GridPane implements ViewMixin{
         RowConstraints row05      = new RowConstraints(40,40, Double.MAX_VALUE);
         RowConstraints row06      = new RowConstraints(40,40, Double.MAX_VALUE);
         RowConstraints row07      = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints row08      = new RowConstraints(40,40, Double.MAX_VALUE);
+
+        // RowConstraints row08      = new RowConstraints(40,40, Double.MAX_VALUE);
+        RowConstraints row08      = new RowConstraints(140,90, Double.MAX_VALUE);
+
         RowConstraints row09      = new RowConstraints(40,40, Double.MAX_VALUE);
         RowConstraints row10      = new RowConstraints(40,40, Double.MAX_VALUE);
 
@@ -192,8 +196,8 @@ public class ContentView extends GridPane implements ViewMixin{
         add(labelConstructStart,    1,5,1,1);
         add(labelCount,             1,6,1,1);
         add(labelType,              1,7,1,1);
-        add(label2015,              1,8,1,1);
-        add(label2017,              1,9,1,1);
+//        add(label2015,              1,8,1,1);
+//        add(label2017,              1,9,1,1);
         add(labelImageURL,          1,10,1,1);
 
         //- Content Input left Column #########################################
@@ -204,8 +208,8 @@ public class ContentView extends GridPane implements ViewMixin{
         add(inputConstructStart,    3,5,1,1);
         add(inputCount,             3,6,1,1);
         add(inputType,              3,7,5,1);
-        add(input2015,              3,8,1,1);
-        add(input2017,              3,9,1,1);
+//        add(input2015,              3,8,1,1);
+//        add(input2017,              3,9,1,1);
         add(inputImageURL,          3,10,5,1);
 
         //- Content Label right Column #########################################
@@ -216,8 +220,8 @@ public class ContentView extends GridPane implements ViewMixin{
         add(labelConstructFinished, 5,5,1,1);
         // --> Space
         // --> Input from right Column (inputType)
-        add(label2016,              5,8,1,1);
-        add(label2018,              5,9,1,1);
+//        add(label2016,              5,8,1,1);
+//        add(label2018,              5,9,1,1);
         // --> Input from right Column (inputImageURL)
 
         //- Content Input right Column  #######################################
@@ -228,8 +232,11 @@ public class ContentView extends GridPane implements ViewMixin{
         add(inputConstructFinished, 7,5,1,1);
         // --> Space
         // --> Input from right Column (inputType)
-        add(input2016,              7,8,1,1);
-        add(input2018,              7,9,1,1);
+//        add(input2016,              7,8,1,1);
+//        add(input2018,              7,9,1,1);
+
+        //- GummibaerenDashboard
+        add(gummibaerenDashboard,              1,8,7,2);
 
     }
 
@@ -256,6 +263,9 @@ public class ContentView extends GridPane implements ViewMixin{
         inputConstructFinished.textProperty()   .bindBidirectional(rootPM.getWindProxy().constructFinishProperty(), new NumberStringConverter());
         input2016.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw16Property(), new NumberStringConverter());
         input2018.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw18Property(), new NumberStringConverter());
+
+        //- Binding gummibaeren Dashboard
+
 
     }
 

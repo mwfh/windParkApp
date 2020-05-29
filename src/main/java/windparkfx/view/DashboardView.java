@@ -34,26 +34,25 @@ public class DashboardView extends GridPane implements ViewMixin{
 
     @Override
     public void initializeSelf() {
-        addStylesheetFiles("style.css");
+//        addStylesheetFiles("style.css");
+        addStylesheetFiles(rootPM.getStyleChoose());
+        getStyleClass().add("dashboard-view");
     }
 
     @Override
     public void initializeControls() {
 
-        //imgView = new ImageView();
-        setStyle("-fx-background-color:#1D1D1D; ");
-
         titleVillage        = new Label();
-        titleVillage.setId("labeltitletext");
+        titleVillage.getStyleClass().add("labeltitletext");
 
         titleCanton         = new Label();
-        titleCanton.setId("dashboardText");
+        titleCanton.getStyleClass().add("dashboardText");
 
         titleInstalKW       = new Label();
-        titleInstalKW.setId("dashboardText");
+        titleInstalKW.getStyleClass().add("dashboardText");
 
         titleMWattTotal     = new Label();
-        titleMWattTotal.setId("dashboardText");
+        titleMWattTotal.getStyleClass().add("dashboardText");
 
         titleImgUrl         = new Label();
 

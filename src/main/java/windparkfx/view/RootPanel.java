@@ -1,14 +1,15 @@
 package windparkfx.view;
 
+
 import javafx.scene.layout.VBox;
 import windparkfx.presentationmodel.RootPM;
-import windparkfx.view.NewHeader_HydroToolbar.HydroToolbar;
+import windparkfx.view.NewHeader_Toolbar.HeaderToolbar;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
-
+import windparkfx.view.gummibaerenDashboard.GummibaerenDashboard;
 
 /**
  * @author Mario Wettstein
@@ -23,12 +24,11 @@ public class RootPanel extends BorderPane implements ViewMixin {
     //private HeaderView headerView; //- Own Header
 
     //- NewHeader_HydroToolbar
-    private HydroToolbar newHeaderView;
+    private HeaderToolbar newHeaderView;
 
 
     private ContentView         contentView;
     private SideListView        sideListView;
-    //private BottomListView      bottomListView;
 
     private DashboardView dashboardView;
     private TitleBoardView titleBoardView;
@@ -40,6 +40,12 @@ public class RootPanel extends BorderPane implements ViewMixin {
 
     private Button button;
 
+
+    //- gummibaerenDashboard
+    private GummibaerenDashboard gummibaerenDashboard;
+
+
+    //- Constructro
     public RootPanel(RootPM model) {
         this.rootPM = model;
         init();
@@ -47,8 +53,9 @@ public class RootPanel extends BorderPane implements ViewMixin {
 
     @Override
     public void initializeSelf() {
-        addStylesheetFiles("style.css");
-
+        //addStylesheetFiles("stylenight.css");
+        addStylesheetFiles(rootPM.getStyleChoose());
+        getStyleClass().add("root-panel-view");
     }
 
     @Override
@@ -56,7 +63,7 @@ public class RootPanel extends BorderPane implements ViewMixin {
         splitPane           = new SplitPane();
         splitPane.setMinWidth(800);
         splitPane.setPrefWidth(1400);
-        splitPane.setStyle("-fx-background-color:#1D1D1D; ");
+        splitPane.getStyleClass().add("root-panel-split-pane");
 
         //headerView          = new HeaderView(rootPM);
 
@@ -64,30 +71,30 @@ public class RootPanel extends BorderPane implements ViewMixin {
         splitPaneVertical.setOrientation(Orientation.VERTICAL);
 
         //- NewHeader_HydroToolbar
-        newHeaderView       = new HydroToolbar(rootPM);
+        newHeaderView       = new HeaderToolbar(rootPM);
 
         sideListView        = new SideListView(rootPM);
         contentView         = new ContentView(rootPM);
-        //bottomListView      = new BottomListView(rootPM);
-       //bottomListView.setMaxSize(Double.MAX_VALUE, 400);
         dashboardView       = new DashboardView(rootPM);
         titleBoardView      = new TitleBoardView(rootPM);
 
+        //- gummibaerenDashboard
+        gummibaerenDashboard = new GummibaerenDashboard(rootPM);
     }
 
     @Override
     public void layoutControls() {
-        setStyle("-fx-background-color: #1D1D1D");
         splitPane.getItems().addAll(new VBox(titleBoardView,sideListView), new VBox(dashboardView,contentView));
-        //splitPaneVertical.getItems().addAll(splitPane,bottomListView);
-        splitPaneVertical.getItems().addAll(splitPane);
+        //splitPaneVertical.getItems().addAll(splitPane);
+        splitPaneVertical.getItems().addAll(splitPane,gummibaerenDashboard);
+
         setTop(newHeaderView);
         setCenter(splitPaneVertical);
 
 //        setTop(newHeaderView);
 //        setCenter(splitPane);
 //        setBottom(bottomListView);
-        //setTop(headerView);
+
     }
 
     @Override

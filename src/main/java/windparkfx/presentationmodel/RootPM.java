@@ -50,7 +50,8 @@ public class RootPM{
     private CantonDataPM cantonProxy = new CantonDataPM();
     private WindDataPM   windProxy =   new WindDataPM();
 
-
+    //- CSS File value:
+    private String styleChoose = "style.css";
 
     public RootPM() {
 
@@ -572,4 +573,14 @@ public class RootPM{
     }
 
 
+
+    // Style File Chooser:
+
+    public String getStyleChoose() {
+        return styleChoose;
+    }
+
+    public void setStyleChoose(String styleChoose) {
+        this.styleChoose = styleChoose;
+    }
 }

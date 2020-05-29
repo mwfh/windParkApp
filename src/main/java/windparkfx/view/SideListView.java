@@ -27,7 +27,9 @@ public class SideListView extends VBox implements ViewMixin {
 
     @Override
     public void initializeSelf() {
-        addStylesheetFiles("style.css");
+//        addStylesheetFiles("style.css");
+        addStylesheetFiles(rootPM.getStyleChoose());
+        getStyleClass().add("side-list-view");
     }
 
     @Override
@@ -80,10 +82,6 @@ public class SideListView extends VBox implements ViewMixin {
         //- Init von Kraftwerk Status Spalte
         TableColumn<WindDataPM, String> state = new TableColumn<>("Status");
         state.setCellValueFactory(cell -> cell.getValue().statusProperty());
-
-//        //- Init von Kanton Image
-//        TableColumn<WindDataPM, ImageView> imageCanton = new TableColumn<>("Wappen");
-//        imageCanton.setCellValueFactory(cell -> cell.getValue().getCantonImageView();
 
         //- Init von MW 15
         TableColumn<WindDataPM, String> leistungKW = new TableColumn<>("Leistung (kw)");

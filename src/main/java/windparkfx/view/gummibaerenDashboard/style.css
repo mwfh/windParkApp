@@ -1,0 +1,434 @@
+.gummibaeren-dashboard {
+    /* Color Settings */
+    -fx-padding: 8;
+    -fx-background-color: #FFFEFA;
+    -green: #709C44;
+    -white: #FFFEFA;
+    -red: #BB4D4D;
+    -grey: #4C4C4C;
+    -light-grey: #A7A7A7;
+    -light-blue: #40A5C5;
+    -middle-grey: #939393;
+
+    -day-title-color: #4C4C4C;
+    -day-background-color: #FFFEFA;
+    -day-switch-contol-boarder-color: #A4A2A0;
+
+    -night-title-color: #C2C2C2;
+    -night-background-color: #1D1D1D;
+    -night-button-background-color: #E2E2E2;
+    -night-switch-thumb-control-background-color: #1D1D1D;
+    -night-switch-contol-boarder-color: #B5B2B1;
+    -night-dropshadow-color: #010101;
+}
+
+/* Dashboard Night Start ##################################################*/
+.gummibaeren-dashboard{
+    /* Set Settings */
+    -fx-background-color: -day-background-color;
+}
+
+.gummibaeren-dashboard:night {
+    /* Set Settings */
+    -fx-background-color: -night-background-color;
+}
+
+
+/* Buttons */
+.gummibaeren-dashboard:unchecked-sum1:night .select-button1 {
+    -fx-fill: -night-button-background-color;
+}
+.gummibaeren-dashboard:unchecked-sum2:night .select-button2 {
+    -fx-fill: -night-button-background-color;
+}
+.gummibaeren-dashboard:unchecked-sum3:night .select-button3 {
+    -fx-fill: -night-button-background-color;
+}
+.gummibaeren-dashboard:unchecked-sum4:night .select-button4 {
+    -fx-fill: -night-button-background-color;
+}
+
+/* Dashboard Night Ende ##################################################*/
+
+/* Active Circle Start ##################################################*/
+.gummibaeren-dashboard .active-circles1 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.24), 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:night .active-circles1 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:unchecked-sum1 .active-circles1 {
+    -fx-fill: -middle-grey;
+}
+.gummibaeren-dashboard:unchecked-sum1:night .active-circles1 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .active-circles2 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.24), 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:night .active-circles2 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:unchecked-sum2 .active-circles2 {
+    -fx-fill: -middle-grey;
+}
+.gummibaeren-dashboard:unchecked-sum2:night .active-circles2 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .active-circles3 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.24), 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:night .active-circles3 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:unchecked-sum3 .active-circles3 {
+    -fx-fill: -middle-grey;
+}
+.gummibaeren-dashboard:unchecked-sum3:night .active-circles3 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .active-circles4 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:night .active-circles4 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+.gummibaeren-dashboard:unchecked-sum4 .active-circles4 {
+    -fx-fill: -middle-grey;
+}
+.gummibaeren-dashboard:unchecked-sum4:night .active-circles4 {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 5, 0, 0, 3);
+}
+
+/* Active Circle End ##################################################*/
+
+/* Select Button Start ##################################################*/
+.gummibaeren-dashboard .select-button1 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 5, 0, 0, 3);
+}
+
+.gummibaeren-dashboard:unchecked-sum1 .select-button1 {
+    -fx-fill: -white;
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .select-button2 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 5, 0, 0, 3);
+}
+
+.gummibaeren-dashboard:unchecked-sum2 .select-button2 {
+    -fx-fill: -white;
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .select-button3 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 5, 0, 0, 3);
+}
+
+.gummibaeren-dashboard:unchecked-sum3 .select-button3 {
+    -fx-fill: -white;
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .select-button4 {
+    -fx-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 5, 0, 0, 3);
+}
+
+.gummibaeren-dashboard:unchecked-sum4 .select-button4 {
+    -fx-fill: -white;
+}
+/* Select Button End ##################################################*/
+
+/* Button text Button Start ##################################################*/
+.gummibaeren-dashboard .button-text1 {
+    -fx-font-family: 'FontAwesome';
+    -fx-font-size: 12;
+    -fx-fill: -white;
+}
+
+.gummibaeren-dashboard:unchecked-sum1 .button-text1 {
+    -fx-fill: -light-blue;
+}
+/* ##################################################*/
+.gummibaeren-dashboard .button-text2 {
+    -fx-font-family: 'FontAwesome';
+    -fx-font-size: 12;
+    -fx-fill: -white;
+}
+
+.gummibaeren-dashboard:unchecked-sum2 .button-text2 {
+    -fx-fill: -light-blue;
+}
+/* ##################################################*/
+.gummibaeren-dashboard .button-text3 {
+    -fx-font-family: 'FontAwesome';
+    -fx-font-size: 12;
+    -fx-fill: -white;
+}
+
+.gummibaeren-dashboard:unchecked-sum3 .button-text3 {
+    -fx-fill: -light-blue;
+}
+/* ##################################################*/
+.gummibaeren-dashboard .button-text4 {
+    -fx-font-family: 'FontAwesome';
+    -fx-font-size: 12;
+    -fx-fill: -white;
+}
+
+.gummibaeren-dashboard:unchecked-sum4 .button-text4 {
+    -fx-fill: -light-blue;
+}
+
+/* Button text Button End ##################################################*/
+
+
+/* Start Display Textfield Start ##################################################*/
+
+.gummibaeren-dashboard .displays1 {
+    -fx-font-family: 'Lato Light';
+    -fx-fill: -white;
+    -fx-font-size: 25;
+    -fx-border-color: -white;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-width: 74;
+    -fx-pref-width: 74;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-text-box-border: transparent;
+    -fx-focus-color: transparent;
+    -fx-alignment: center;
+    -fx-background-color: -light-blue;
+    -fx-padding: 0px;
+    -fx-border-insets: 0px;
+    -fx-background-insets: 0px;
+    -fx-underline: true;
+    -fx-text-fill: -white;
+}
+.gummibaeren-dashboard:unchecked-sum1 .displays1 {
+    -fx-background-color: -addToSumDisabled;
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .displays2 {
+    -fx-font-family: 'Lato Light';
+    -fx-fill: -white;
+    -fx-font-size: 25;
+    -fx-border-color: -white;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-width: 74;
+    -fx-pref-width: 74;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-text-box-border: transparent;
+    -fx-focus-color: transparent;
+    -fx-alignment: center;
+    -fx-background-color: -light-blue;
+    -fx-padding: 0px;
+    -fx-border-insets: 0px;
+    -fx-background-insets: 0px;
+    -fx-underline: true;
+    -fx-text-fill: -white;
+}
+.gummibaeren-dashboard:unchecked-sum2 .displays2 {
+    -fx-background-color: -addToSumDisabled;
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .displays3 {
+    -fx-font-family: 'Lato Light';
+    -fx-fill: -white;
+    -fx-font-size: 25;
+    -fx-border-color: -white;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-width: 74;
+    -fx-pref-width: 74;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-text-box-border: transparent;
+    -fx-focus-color: transparent;
+    -fx-alignment: center;
+    -fx-background-color: -light-blue;
+    -fx-padding: 0px;
+    -fx-border-insets: 0px;
+    -fx-background-insets: 0px;
+    -fx-underline: true;
+    -fx-text-fill: -white;
+}
+.gummibaeren-dashboard:unchecked-sum3 .displays3 {
+    -fx-background-color: -addToSumDisabled;
+}
+/* ##################################################*/
+
+.gummibaeren-dashboard .displays4 {
+    -fx-font-family: 'Lato Light';
+    -fx-fill: -white;
+    -fx-font-size: 25;
+    -fx-border-color: -white;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-width: 74;
+    -fx-pref-width: 74;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-text-box-border: transparent;
+    -fx-focus-color: transparent;
+    -fx-alignment: center;
+    -fx-background-color: -light-blue;
+    -fx-padding: 0px;
+    -fx-border-insets: 0px;
+    -fx-background-insets: 0px;
+    -fx-underline: true;
+    -fx-text-fill: -white;
+}
+.gummibaeren-dashboard:unchecked-sum4 .displays4 {
+    -fx-background-color: -addToSumDisabled;
+}
+/* Start Display Textfield Ende ##################################################*/
+
+
+
+.gummibaeren-dashboard .year{
+    -fx-font-family: 'Lato Regular';
+    -fx-fill: -white;
+    -fx-font-size: 12;
+}
+
+
+
+.gummibaeren-dashboard .off-circles {
+    -fx-fill: -red;
+}
+
+.gummibaeren-dashboard .rect {
+    -fx-fill: -white;
+
+}
+
+.elements-grid{
+    /*-fx-background-color: yellow;*/
+    /*-fx-grid-lines-visible: true;*/
+}
+
+.element-circle-draw{
+    /*-fx-background-color: red;*/
+}
+
+.element-sum-draw{
+    /*-fx-background-color: green;*/
+}
+
+
+/*title*/
+.gummibaeren-dashboard .element-title-stack{
+     -fx-alignment: center-left;
+     -fx-border-color: -light-grey;
+     -fx-border-width: 0 0 1 0;
+ }
+.gummibaeren-dashboard .title-label{
+    -fx-font-family: 'Lato';
+    -fx-font-size: 16;
+    -fx-text-fill: -grey;
+}
+
+.gummibaeren-dashboard:night .title-label{
+    -fx-text-fill: -night-title-color;
+}
+
+/*sum*/
+.gummibaeren-dashboard .display-sum {
+    -fx-font-family: 'Lato Regular';
+    -fx-font-size: 30;
+    -fx-fill: -light-blue;
+    -fx-underline: true;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 1, 0, 0, 1);
+}
+.gummibaeren-dashboard:night .display-sum {
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 1, 0, 0, 1);
+}
+.gummibaeren-dashboard .sum-text{
+    -fx-font-size: 12;
+    -fx-font-family: 'Lato';
+    -fx-fill: -light-blue;
+}
+
+/*icons*/
+.gummibaeren-dashboard .icon-lightbulb-off{
+    -fx-font-family: 'FontAwesome';
+    -fx-font-size: 20;
+    -fx-text-fill: -middle-grey;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 3, 0, 0, 2);
+}
+.gummibaeren-dashboard:night .icon-lightbulb-off{
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 3, 0, 0, 2);
+}
+
+.gummibaeren-dashboard .icon-lightbulb-on{
+    -fx-font-family: 'FontAwesome';
+    -fx-font-size: 20;
+    -fx-text-fill: -light-blue;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.24), 3, 0, 0, 2);
+}
+.gummibaeren-dashboard:night .icon-lightbulb-on{
+    -fx-effect: dropshadow(one-pass-box, -night-dropshadow-color, 3, 0, 0, 2);
+}
+
+/* Switch Control */
+.gummibaeren-dashboard .switch {
+    -fx-padding         : 50;
+    -fx-background-color: rgb(250, 250, 250);
+}
+
+.gummibaeren-dashboard .thumb {
+    -fx-fill: #40A5C5;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 0, 0, 2, 1);
+    -fx-stroke: -day-switch-contol-boarder-color;
+    -fx-stroke-width: 1;
+}
+.gummibaeren-dashboard:night .thumb {
+    -fx-fill: -night-switch-thumb-control-background-color;
+    -fx-stroke: -night-switch-contol-boarder-color;
+
+    /* Special Effects*/
+    /*-fx-stroke-dash-array: 12 2 4 2;*/
+    /*-fx-stroke-dash-offset: 6;*/
+    /*-fx-stroke-line-cap: butt;*/
+}
+
+.gummibaeren-dashboard .frame {
+    -fx-fill      : #C4C4C4;
+    -fx-arc-height: 20;
+    -fx-arc-width : 20;
+    /*-fx-effect: innershadow( gaussian, rgba( 0, 0, 0, 0.5 ), 3, 0, 0, 3 );*/
+    -fx-effect: innershadow( gaussian, rgba( 0, 0, 0, 0.5 ), 3, 0, 3, 3 );
+    -fx-stroke: -day-switch-contol-boarder-color;
+    -fx-stroke-width: 1;
+}
+.gummibaeren-dashboard:night .frame {
+    -fx-stroke: -night-switch-contol-boarder-color;
+}
+
+
+.gummibaeren-dashboard  .element-switch-draw{
+    -fx-background-color: -day-background-color;
+    /*-fx-background-color: magenta;*/
+}
+
+.gummibaeren-dashboard:night  .element-switch-draw{
+    -fx-background-color: -night-background-color;
+}
+
+

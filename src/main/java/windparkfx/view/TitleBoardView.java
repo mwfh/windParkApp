@@ -33,31 +33,30 @@ public class TitleBoardView extends GridPane implements ViewMixin{
 
     @Override
     public void initializeSelf() {
-        addStylesheetFiles("style.css");
+//        addStylesheetFiles("style.css");
+        addStylesheetFiles(rootPM.getStyleChoose());
+        getStyleClass().add("title-board-view");
     }
 
     @Override
     public void initializeControls() {
 
-        //imgView = new ImageView();
-        setStyle("-fx-background-color:#1D1D1D; ");
-
         titleApp        = new Label("Schweizer Windparks");
-        titleApp.setId("titleBoardTextApp");
+        titleApp.getStyleClass().add("title-board-text-app");
 
         titleAllWind         = new Label("Windräder");
-        titleAllWind.setId("titleBaordText");
+        titleAllWind.getStyleClass().add("title-board-text");
 
         titleAllWindKW       = new Label("Gesamtproduktion");
-        titleAllWindKW.setId("titleBaordText");
+        titleAllWindKW.getStyleClass().add("title-board-text");
 
         labelAllWind     = new Label();
-        labelAllWind.setId("titleBaordText");
+        labelAllWind.getStyleClass().add("title-board-text");
 
         labelAllWindKW     = new Label();
-        labelAllWindKW.setId("titleBaordText");
+        labelAllWindKW.getStyleClass().add("title-board-text");
 
-       setGridLinesVisible(true); //- Grind einblenden
+       //setGridLinesVisible(true); //- Grind einblenden
     }
 
     @Override
@@ -67,7 +66,7 @@ public class TitleBoardView extends GridPane implements ViewMixin{
         ColumnConstraints colHead02             = new ColumnConstraints(100,450, Double.MAX_VALUE);
 
         setMinSize(300,150);
-        setMaxSize(700,200);
+        setMaxSize(1000,200);
         getColumnConstraints().addAll(Space,colHead01, colHead02, Space);
 
         RowConstraints SpaceTop           = new RowConstraints(10,10, Double.MAX_VALUE);

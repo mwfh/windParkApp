@@ -4,6 +4,7 @@ package windparkfx;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,6 +24,11 @@ public class WindParkApp extends Application {
 		System.out.println("Bin in Start:");
 
 		RootPM rootPM = new RootPM();
+
+		//- StyleChooser
+		//rootPM.setStyleChoose("styleday.css");
+		rootPM.setStyleChoose("stylenight.css");
+
 		Parent rootPanel = new RootPanel(rootPM);
 
 		Scene scene = new Scene(rootPanel);

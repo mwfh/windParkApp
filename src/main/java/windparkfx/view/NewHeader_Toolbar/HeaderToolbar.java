@@ -1,4 +1,4 @@
-package windparkfx.view.NewHeader_HydroToolbar;
+package windparkfx.view.NewHeader_Toolbar;
 
 import windparkfx.presentationmodel.RootPM;
 import windparkfx.view.ViewMixin;
@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.util.Comparator;
 
 
-public class HydroToolbar extends ToolBar implements ViewMixin {
+public class HeaderToolbar extends ToolBar implements ViewMixin {
 
     private static final String FONT_PATH = "/fonts/fontawesome-webfont.ttf";
 
@@ -44,15 +44,16 @@ public class HydroToolbar extends ToolBar implements ViewMixin {
 
     private TextField searchTextField;
 
-    public HydroToolbar(RootPM model) {
+    public HeaderToolbar(RootPM model) {
         this.rootPM = model;
         init();
     }
 
     @Override
     public void initializeSelf() {
+
         try {
-            InputStream fontInputStream = HydroToolbar.class.getResourceAsStream(FONT_PATH);
+            InputStream fontInputStream = HeaderToolbar.class.getResourceAsStream(FONT_PATH);
             customFont = Font.loadFont(fontInputStream, FONT_SIZE);
         } catch (Exception exception) {
             throw new RuntimeException("Achtung: Die Datei " + FONT_PATH + " konnte nicht geladen/verarbeitet werden. Bitte füge Sie deinem Projekt hinzu!", exception);
@@ -65,6 +66,9 @@ public class HydroToolbar extends ToolBar implements ViewMixin {
         } catch (Exception exception) {
             throw new RuntimeException("Achtung: Die Datei " + STYLE_PATH + " konnte nicht geladen/verarbeitet werden. Bitte füge Sie deinem Projekt hinzu!", exception);
         }
+
+        getStyleClass().add("header-toolbar");
+
     }
 
     @Override
