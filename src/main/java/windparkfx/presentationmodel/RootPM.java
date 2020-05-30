@@ -51,7 +51,7 @@ public class RootPM{
     private WindDataPM   windProxy =   new WindDataPM();
 
     //- CSS File value:
-    private String styleChoose = "style.css";
+    private String styleChoose = "";
 
     public RootPM() {
 
