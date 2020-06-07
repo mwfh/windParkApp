@@ -7,7 +7,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import windparkfx.presentationmodel.RootPM;
-import windparkfx.view.gummibaerenDashboard.GummibaerenDashboard;
+import windparkfx.view.GummibaerenDashboard.GummibaerenDashboard;
 
 /**
  * @author Mario Wettstein
@@ -61,7 +61,7 @@ public class DashboardView extends GridPane implements ViewMixin{
 
         imageView =         new ImageView();
 
-        gummibaerenDashboard = new GummibaerenDashboard(rootPM);
+        gummibaerenDashboard = new GummibaerenDashboard();
 
        //setGridLinesVisible(true); //- Grind einblenden
     }
@@ -120,6 +120,11 @@ public class DashboardView extends GridPane implements ViewMixin{
         imageView.setFitHeight(280);
         imageView.setFitWidth(320);
         imageView.imageProperty()               .bind(rootPM.getWindProxy().getImageView().imageProperty());
+
+        gummibaerenDashboard.productionValue1Property().bindBidirectional(rootPM.getWindProxy().mw15Property());
+        gummibaerenDashboard.productionValue2Property().bindBidirectional(rootPM.getWindProxy().mw16Property());
+        gummibaerenDashboard.productionValue3Property().bindBidirectional(rootPM.getWindProxy().mw17Property());
+        gummibaerenDashboard.productionValue4Property().bindBidirectional(rootPM.getWindProxy().mw18Property());
     }
 
     @Override

@@ -1,29 +1,31 @@
-package windparkfx.view.gummibaerenDashboard;
+package windparkfx.view.GummibaerenDashboard;
 
-import javafx.animation.*;
+import javafx.animation.AnimationTimer;
+import javafx.animation.ParallelTransition;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.*;
 import javafx.css.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
 import javafx.util.Duration;
-import javafx.util.converter.NumberStringConverter;
-import windparkfx.presentationmodel.RootPM;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Produktionsanzeige in MWh für die Jahre 2015 bis 2018 für die Windpark-Applikation
@@ -33,9 +35,7 @@ import java.util.List;
  */
 
 public class GummibaerenDashboard extends Region {
-    private final RootPM rootPM;
 
-    // wird gebraucht fuer StyleableProperties
     private static final StyleablePropertyFactory<GummibaerenDashboard> FACTORY = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
 
     @Override
@@ -53,12 +53,14 @@ public class GummibaerenDashboard extends Region {
 
     private static final double ASPECT_RATIO = ARTBOARD_WIDTH / ARTBOARD_HEIGHT;
 
-    private static final double MINIMUM_WIDTH  = 25;    // ToDo: Anpassen
+    private static final double MINIMUM_WIDTH  = 25;
     private static final double MINIMUM_HEIGHT = MINIMUM_WIDTH / ASPECT_RATIO;
 
-    private static final double MAXIMUM_WIDTH = 1200;    // ToDo: Anpassen
+    private static final double MAXIMUM_WIDTH = 1200;
+    //Pattern
+    private static final String CONVERTIBLE_REGEX = "(\\d+([,’.])?\\d+([,’.])?\\d+|\\d+([,’.])?\\d+|\\d+|\\d )";
 
-    //Declaration:
+//------------Declaration:----------------
     private Circle circle1;
     private Circle circle2;
     private Circle circle3;
@@ -89,58 +91,59 @@ public class GummibaerenDashboard extends Region {
 
     private Label   title;
 
-    //- Icons for Select and Plus
+    //icons for Select and Plus
     private Text buttonText1;
     private Text buttonText2;
     private Text buttonText3;
     private Text buttonText4;
 
-    //panes for positioning
-    private StackPane elementTitleStack;
-    private GridPane allElementsGrid;
-    private Pane element1Draw;
-    private Pane element2Draw;
-    private Pane element3Draw;
-    private Pane element4Draw;
-    private Pane elementSumDraw;
-    private Pane elementSwichDraw;
+    //switch
+    private Label       lightBulbOn;
+    private Label       lightBulbOff;
+    private Circle      switchThumb;
+    private Rectangle   switchFrame;
 
-    private GridPane sumAndswitchGrid;
-
-    //For Switch: Icons
-    private Label lightBulbOn;
-    private Label lightBulbOff;
-
-    //- For Switch: Control
-    // all parts
-    private Circle    thumb;
-    private Rectangle frame;
-//    private static final Color THUMB_ON  = Color.rgb( 62, 130, 247);
-//    private static final Color THUMB_OFF = Color.rgb(250, 250, 250);
-//    private static final Color FRAME_ON  = Color.rgb(162, 197, 255);
-//    private static final Color FRAME_OFF = Color.rgb(153, 153, 153);
-    // all properties
-    private final BooleanProperty on = new SimpleBooleanProperty();
     // all animations
     private Transition onTransition;
     private Transition offTransition;
 
+    //panes for positioning
+    private StackPane   elementTitleStack;
+    private GridPane    allElementsGrid;
+    private Pane        element1Draw;
+    private Pane        element2Draw;
+    private Pane        element3Draw;
+    private Pane        element4Draw;
+    private Pane        elementSumDraw;
+    private Pane        elementSwichDraw;
+    private GridPane    sumAndswitchGrid;
+    // needed for resizing
+    private Pane        drawingPane;
 
-    //todo: nach binding initialValues rausnehmen
-    //Properties:
+//------------Properties:----------------
     private final DoubleProperty productionValue1       =  new SimpleDoubleProperty();
     private final DoubleProperty productionValue2       =  new SimpleDoubleProperty();
     private final DoubleProperty productionValue3       =  new SimpleDoubleProperty();
     private final DoubleProperty productionValue4       =  new SimpleDoubleProperty();
-    private final DoubleProperty productionSum          =  new SimpleDoubleProperty();
-    private final StringProperty SumTitle               =  new SimpleStringProperty();
-    private final StringProperty ccTitle                =  new SimpleStringProperty();
-    private final BooleanProperty production1checked    =  new SimpleBooleanProperty(true);
-    private final BooleanProperty production2checked    =  new SimpleBooleanProperty(true);
-    private final BooleanProperty production3checked    =  new SimpleBooleanProperty(true);
-    private final BooleanProperty production4checked    =  new SimpleBooleanProperty(true);
+    private final DoubleProperty  productionSum          =  new SimpleDoubleProperty();
+    private final StringProperty  SumTitle               =  new SimpleStringProperty("Gesamt (Gerundet)");
+    private final StringProperty  rankingVal1            =  new SimpleStringProperty();
+    private final StringProperty  rankingVal2            =  new SimpleStringProperty();
+    private final StringProperty  rankingVal3            =  new SimpleStringProperty();
+    private final StringProperty  rankingVal4            =  new SimpleStringProperty();
+    private final StringProperty  ccTitle                =  new SimpleStringProperty("Produktionsleistung in MWh pro Jahr");
+    private final BooleanProperty production1checked     =  new SimpleBooleanProperty(true);
+    private final BooleanProperty production2checked     =  new SimpleBooleanProperty(true);
+    private final BooleanProperty production3checked     =  new SimpleBooleanProperty(true);
+    private final BooleanProperty production4checked     =  new SimpleBooleanProperty(true);
+    private final StringProperty  userFacingString1      =  new SimpleStringProperty();
+    private final StringProperty  userFacingString2      =  new SimpleStringProperty();
+    private final StringProperty  userFacingString3      =  new SimpleStringProperty();
+    private final StringProperty  userFacingString4      =  new SimpleStringProperty();
+    private final BooleanProperty switchOn               =  new SimpleBooleanProperty();
+    private final ObjectProperty<Duration> pulse         =  new SimpleObjectProperty<>(Duration.seconds(1.0));
 
-    // ToDo: ergänzen mit allen CSS stylable properties
+    //- alle CSS stylable properties
     private static final CssMetaData<GummibaerenDashboard, Color> BASE_COLOR_META_DATA = FACTORY.createColorCssMetaData("-base-color", s -> s.baseColor);
 
     private final StyleableObjectProperty<Color> baseColor = new SimpleStyleableObjectProperty<Color>(BASE_COLOR_META_DATA) {
@@ -151,8 +154,7 @@ public class GummibaerenDashboard extends Region {
         }
     };
 
-
-
+//------------Pseudo Classes:----------------
     private static final PseudoClass        UNCHECKSUM_CLASS1              =   PseudoClass.getPseudoClass("unchecked-sum1");
     private final BooleanProperty unCheckedSum1 =   new SimpleBooleanProperty(){
         //connect PseudoClass:
@@ -200,11 +202,85 @@ public class GummibaerenDashboard extends Region {
         }
     };
 
+    private static final PseudoClass        INVALID_CLASS1              =   PseudoClass.getPseudoClass("invalid1");
+    private final BooleanProperty invalid1 =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(INVALID_CLASS1, get());
+        }
+    };
+    private static final PseudoClass        INVALID_CLASS2              =   PseudoClass.getPseudoClass("invalid2");
+    private final BooleanProperty invalid2 =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(INVALID_CLASS2, get());
+        }
+    };
+    private static final PseudoClass        INVALID_CLASS3              =   PseudoClass.getPseudoClass("invalid3");
+    private final BooleanProperty invalid3 =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(INVALID_CLASS3, get());
+        }
+    };
+    private static final PseudoClass        INVALID_CLASS4              =   PseudoClass.getPseudoClass("invalid4");
+    private final BooleanProperty invalid4 =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(INVALID_CLASS4, get());
+        }
+    };
 
-    // ToDo: Loeschen falls keine getaktete Animation benoetigt wird
-    private final BooleanProperty          blinking = new SimpleBooleanProperty(false);
-    private final ObjectProperty<Duration> pulse    = new SimpleObjectProperty<>(Duration.seconds(1.0));
+    private static final PseudoClass        CONVERTIBLE_CLASS1          =   PseudoClass.getPseudoClass("convertible1");
+    private final BooleanProperty           convertible1         =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(CONVERTIBLE_CLASS1, get());
+        }
+    };
 
+    private static final PseudoClass        CONVERTIBLE_CLASS2          =   PseudoClass.getPseudoClass("convertible2");
+    private final BooleanProperty           convertible2         =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(CONVERTIBLE_CLASS2, get());
+        }
+    };
+
+    private static final PseudoClass        CONVERTIBLE_CLASS3          =   PseudoClass.getPseudoClass("convertible3");
+    private final BooleanProperty           convertible3         =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(CONVERTIBLE_CLASS3, get());
+        }
+    };
+
+    private static final PseudoClass        CONVERTIBLE_CLASS4          =   PseudoClass.getPseudoClass("convertible4");
+    private final BooleanProperty           convertible4         =   new SimpleBooleanProperty(){
+        //connect PseudoClass:
+        @Override
+        protected void invalidated() {
+            super.invalidated();
+            pseudoClassStateChanged(CONVERTIBLE_CLASS4, get());
+        }
+    };
+
+
+//------------Animation:----------------
     private final AnimationTimer timer = new AnimationTimer() {
         private long lastTimerCall;
 
@@ -217,15 +293,8 @@ public class GummibaerenDashboard extends Region {
         }
     };
 
-    // ToDo: alle Animationen und Timelines deklarieren
-    //private final Timeline timeline = new Timeline();
-
-    // needed for resizing
-    private Pane drawingPane;
-
-    //- Construtor
-    public GummibaerenDashboard(RootPM model) {
-        this.rootPM = model;
+//------------Constructor:----------------
+    public GummibaerenDashboard() {
         initializeSelf();
         initializeParts();
         initializeDrawingPane();
@@ -234,28 +303,21 @@ public class GummibaerenDashboard extends Region {
         setupEventHandlers();
         setupValueChangeListeners();
         setupBindings();
-
-        //- Temporäre Value Sets
-        initializeStartValues();
-
     }
 
+//------------initializeSelf:----------------
     private void initializeSelf() {
         loadFonts("/fonts/Lato/Lato-Lig.ttf", "/fonts/Lato/Lato-Reg.ttf", "/fonts/fontawesome-webfont.ttf");
-        addStylesheetFiles("style.css");
+        addStylesheetFiles("dashboardStyle.css");
 
         getStyleClass().add("gummibaeren-dashboard");
     }
 
+//------------initializeParts:----------------
     private void initializeParts() {
-        //ToDo: alle deklarierten Parts initialisieren
-        //-----variables:-------
-        //general
-        double centerWidth = ARTBOARD_WIDTH * 0.5;
-        double centerHeight = ARTBOARD_HEIGHT * 0.5;
-        final double space = 8;
 
-        //circles:
+        //-----variables:-------
+
         final double radiusMainCircle = 50;
         final double radiusSelectButton = 12;
 
@@ -306,7 +368,6 @@ public class GummibaerenDashboard extends Region {
         buttonText4.setText(CHECK);
         buttonText4.setMouseTransparent(true);
 
-
         //displays
         display1 = createCenteredTextField(radiusMainCircle, radiusMainCircle ,"displays1");
         display2 = createCenteredTextField(radiusMainCircle, radiusMainCircle ,"displays2");
@@ -327,15 +388,29 @@ public class GummibaerenDashboard extends Region {
         title = new Label();
         title.getStyleClass().add("title-label");
 
-        //Switch:
+        //ranking
+        ranking1 = createCenteredTextRanking("1st",radiusMainCircle,radiusMainCircle + 32,"ranking1");
+        ranking2 = createCenteredTextRanking("2nd",radiusMainCircle,radiusMainCircle + 32,"ranking2");
+        ranking3 = createCenteredTextRanking("3rd",radiusMainCircle,radiusMainCircle + 32,"ranking3");
+        ranking4 = createCenteredTextRanking("4th",radiusMainCircle,radiusMainCircle + 32,"ranking4");
+
+        //switch:
         lightBulbOff = new Label(LIGHTBULB);
         lightBulbOff.getStyleClass().add("icon-lightbulb-off");
 
         lightBulbOn = new Label(LIGHTBULB);
         lightBulbOn.getStyleClass().add("icon-lightbulb-on");
 
-        // Construct Dashboard with all Element
-        //------All elements:
+        switchThumb = new Circle(10, 11, 10);
+        switchThumb.getStyleClass().add("thumb");
+        switchThumb.setMouseTransparent(true);
+
+        switchFrame = new Rectangle(0, 1, 40, 20);
+        switchFrame.getStyleClass().add("frame");
+        switchFrame.setMouseTransparent(true);
+
+        // Construct Dashboard with all elements
+        //------All elements #########################################################################:
         //element for title:
         elementTitleStack = new StackPane();
         elementTitleStack.getStyleClass().add("element-title-stack");
@@ -354,16 +429,22 @@ public class GummibaerenDashboard extends Region {
         element2Draw.setPrefSize(100,  100);
         element3Draw.setPrefSize(100,  100);
         element4Draw.setPrefSize(100,  100);
+
         //element for sum:
         elementSumDraw = new Pane();
         elementSumDraw.getStyleClass().add("element-sum-draw");
         elementSumDraw.setPrefSize(114,  100);
 
+        //element for switch:
+        elementSwichDraw = new Pane();
+        elementSwichDraw.getStyleClass().add("element-switch-draw");
+        elementSwichDraw.setPrefSize(50,  20);
 
-        //-------all grids:
+
+        //------- ALL GRIDS #########################################################################:
         // Construct Grid Pane for all elements:
         allElementsGrid = new GridPane();
-//        allElementsGrid.getStyleClass().add("elements-grid");
+        allElementsGrid.getStyleClass().add("elements-grid");
         allElementsGrid.setPrefSize(ARTBOARD_WIDTH,  ARTBOARD_HEIGHT);
 
         ColumnConstraints sumColumn = new ColumnConstraints(114, 114, Double.MAX_VALUE);
@@ -391,97 +472,54 @@ public class GummibaerenDashboard extends Region {
         RowConstraints spaceBetween = new RowConstraints(14, 14, Double.MAX_VALUE);
         RowConstraints switchRow = new RowConstraints(20, 20, Double.MAX_VALUE);
         sumAndswitchGrid.getRowConstraints().addAll(spaceToTop, sumRow, spaceBetween, switchRow);
-
-        //- Switch Control
-        thumb = new Circle(10, 10, 10);
-        thumb.getStyleClass().add("thumb");
-        thumb.setMouseTransparent(true);
-
-        frame = new Rectangle(0, 0, 40, 20);
-        frame.getStyleClass().add("frame");
-        frame.setMouseTransparent(true);
-
-        elementSwichDraw = new Pane();
-        elementSwichDraw.getStyleClass().add("element-switch-draw");
-        elementSwichDraw.setPrefSize(50,  20);
     }
 
-    private void initializeStartValues()
-    {
-        setCcTitle("Produktionsleistung in MWh pro Jahr");
-        setSumTitle("Gesamt");
-//        setProductionValue1(1000);
-//        setProductionValue2(2000);
-//        setProductionValue3(3000);
-//        setProductionValue4(4000);
-
-        setProductionSum(getProductionValue1() + getProductionValue2() + getProductionValue3() + getProductionValue4());
-        setProduction1checked(true);
-        setProduction2checked(true);
-        setProduction3checked(true);
-        setProduction4checked(true);
-
-        //rootPM.setStyleChoose("styleday.css");
-    }
-
+//------------initializeDrawingPane:----------------
     private void initializeDrawingPane() {
         drawingPane = new Pane();
         drawingPane.getStyleClass().add("drawing-pane");
         drawingPane.setMaxSize(ARTBOARD_WIDTH,  ARTBOARD_HEIGHT);
         drawingPane.setMinSize(ARTBOARD_WIDTH,  ARTBOARD_HEIGHT);
         drawingPane.setPrefSize(ARTBOARD_WIDTH, ARTBOARD_HEIGHT);
+
+        checkRankingPlace();
     }
 
+//------------initializeAnimations:----------------
     private void initializeAnimations(){
-        //ToDo: alle deklarierten Animationen initialisieren
-        TranslateTransition onTranslation = new TranslateTransition(Duration.millis(500), thumb);
+        //- deklarierten Animationen initialisieren
+        TranslateTransition onTranslation = new TranslateTransition(Duration.millis(500), switchThumb);
 
         onTranslation.setFromX(0);
         onTranslation.setToX(20);
 
-        FillTransition onFill = new FillTransition(Duration.millis(500), frame);
-//        onFill.setFromValue(FRAME_OFF);
-//        onFill.setToValue(FRAME_ON);
+        onTransition = new ParallelTransition(onTranslation);
 
-        FillTransition onFillThumb = new FillTransition(Duration.millis(500), thumb);
-//        onFillThumb.setFromValue(THUMB_OFF);
-//        onFillThumb.setToValue(THUMB_ON);
-
-
-        onTransition = new ParallelTransition(onTranslation, onFill, onFillThumb);
-
-        TranslateTransition offTranslation = new TranslateTransition(Duration.millis(500), thumb);
+        TranslateTransition offTranslation = new TranslateTransition(Duration.millis(500), switchThumb);
         offTranslation.setFromX(20);
         offTranslation.setToX(0);
 
-        FillTransition offFill = new FillTransition(Duration.millis(500), frame);
-//        offFill.setFromValue(FRAME_ON);
-//        offFill.setToValue(FRAME_OFF);
-
-        FillTransition offFillThumb = new FillTransition(Duration.millis(500), thumb);
-//        offFillThumb.setFromValue(THUMB_ON);
-//        offFillThumb.setToValue(THUMB_OFF);
-
-        offTransition = new ParallelTransition(offTranslation, offFill, onFillThumb);
+        offTransition = new ParallelTransition(offTranslation);
 
     }
 
+//------------layoutParts:----------------
     private void layoutParts() {
-        //Add Elements to Sum%SwitchGrid
+        //Add Elements to SumAndSwitchGrid
         elementSumDraw.getChildren().addAll(displaySum,sumText);
-        elementSwichDraw.getChildren().addAll(frame, thumb);
+        elementSwichDraw.getChildren().addAll(switchFrame, switchThumb);
 
         sumAndswitchGrid.add(elementSumDraw, 0, 1,3,1);
-        sumAndswitchGrid.add(lightBulbOff, 0, 3,1,1);
+        sumAndswitchGrid.add(lightBulbOn, 0, 3,1,1);
         sumAndswitchGrid.add(elementSwichDraw, 1,3, 1, 1);
-        sumAndswitchGrid.add(lightBulbOn, 2, 3, 1,1);
+        sumAndswitchGrid.add(lightBulbOff, 2, 3, 1,1);
 
         // Add Elements to allElementsGrid
         elementTitleStack.getChildren().addAll(title);
-        element1Draw.getChildren().addAll(circle1,display1,year1,button1,buttonText1);
-        element2Draw.getChildren().addAll(circle2,display2,year2,button2,buttonText2);
-        element3Draw.getChildren().addAll(circle3,display3,year3,button3,buttonText3);
-        element4Draw.getChildren().addAll(circle4,display4,year4,button4,buttonText4);
+        element1Draw.getChildren().addAll(circle1,display1,year1,button1,buttonText1,ranking1);
+        element2Draw.getChildren().addAll(circle2,display2,year2,button2,buttonText2,ranking2);
+        element3Draw.getChildren().addAll(circle3,display3,year3,button3,buttonText3,ranking3);
+        element4Draw.getChildren().addAll(circle4,display4,year4,button4,buttonText4,ranking4);
 
         allElementsGrid.add(title,              0,0,8,1);
         allElementsGrid.add(sumAndswitchGrid,   0,2,1,1);
@@ -495,9 +533,8 @@ public class GummibaerenDashboard extends Region {
         getChildren().add(drawingPane);
     }
 
+//------------setupEventHandlers:----------------
     private void setupEventHandlers() {
-        //ToDo: bei Bedarf ergänzen
-
         button1.setOnMouseClicked(event -> {
             production1checked.setValue(!isProduction1checked());
             calculateSum();
@@ -534,50 +571,215 @@ public class GummibaerenDashboard extends Region {
         });
 
         //- Switch Control
-        elementSwichDraw.setOnMouseClicked(event -> setOn(!isOn()));
+        elementSwichDraw.setOnMouseClicked(event -> setSwitchOn(!getSwitchOn()));
+
+        //forgiving format (convertible)
+        display1.setOnAction(event -> convert(1));
+        display2.setOnAction(event -> convert(2));
+        display3.setOnAction(event -> convert(3));
+        display4.setOnAction(event -> convert(4));
+
+        display1.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            keyPressedCheck(event, 1);
+        });
+        display2.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            keyPressedCheck(event, 2);
+        });
+        display3.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            keyPressedCheck(event, 3);
+        });
+        display4.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            keyPressedCheck(event, 4);
+        });
     }
 
-    private void setupValueChangeListeners() {
-        //ToDo: durch die Listener auf die Properties des Custom Controls ersetzen
 
-        // fuer die getaktete Animation
-      //  blinking.addListener((observable, oldValue, newValue) -> startClockedAnimation(newValue));
-        onProperty().addListener((observable, oldValue, newValue) -> updateUI());
+//------------setupValueChangeListeners:----------------
+    private void setupValueChangeListeners() {
+        //- for Update Animation
+        switchOnProperty().addListener((observable, oldValue, newValue) -> updateUI());
 
         //- ValueChangeListener ###########################
-        display1.textProperty()              .addListener((observable, oldValue, newValue) -> {
+        userFacingString1.addListener((observable, oldValue, newValue) -> {
+            System.out.println("war im changeListener 1");
+            checkNewValueSet(newValue,1);
+
+            //forgiving format - convertible true/false setzen:
+            setConvertible1(setConvertible(newValue));
+
+            //updateSum:
+            calculateSum();
+        });
+        userFacingString2.addListener((observable, oldValue, newValue) -> {
+            System.out.println("war im changeListener 2");
+            checkNewValueSet(newValue,2);
+
+            //forgiving format - convertible true/false setzen:
+            setConvertible2(setConvertible(newValue));
+
+            //updateSum:
+            calculateSum();
+        });
+        userFacingString3.addListener((observable, oldValue, newValue) -> {
+            System.out.println("war im changeListener 3");
+            checkNewValueSet(newValue,3);
+
+            //forgiving format - convertible true/false setzen:
+            setConvertible3(setConvertible(newValue));
+
+            //updateSum:
+            calculateSum();
+        });
+        userFacingString4.addListener((observable, oldValue, newValue) -> {
+            System.out.println("war im changeListener 4");
+            checkNewValueSet(newValue,4);
+
+            //forgiving format - convertible true/false setzen:
+            setConvertible4(setConvertible(newValue));
+
+            //updateSum:
             calculateSum();
         });
 
-        display2.textProperty()              .addListener((observable, oldValue, newValue) -> {
-            calculateSum();
+        //binding: userFacingString-productionValue
+        productionValue1.addListener((observable, oldValue, newValue) -> {
+            String newProdVal = newValue.toString();
+            setUserFacingString1(newProdVal);
         });
 
-        display3.textProperty()              .addListener((observable, oldValue, newValue) -> {
-            calculateSum();
+        productionValue2.addListener((observable, oldValue, newValue) -> {
+            String newProdVal = newValue.toString();
+            setUserFacingString2(newProdVal);
         });
 
-        display4.textProperty()              .addListener((observable, oldValue, newValue) -> {
-            calculateSum();
+        productionValue3.addListener((observable, oldValue, newValue) -> {
+            String newProdVal = newValue.toString();
+            setUserFacingString3(newProdVal);
         });
+
+        productionValue4.addListener((observable, oldValue, newValue) -> {
+            String newProdVal = newValue.toString();
+            setUserFacingString4(newProdVal);
+        });
+
     }
 
+//------------setupBindings:----------------
     private void setupBindings() {
-        display1.textProperty().bindBidirectional(productionValue1Property(), new NumberStringConverter());
-        display2.textProperty().bindBidirectional(productionValue2Property(), new NumberStringConverter());
-        display3.textProperty().bindBidirectional(productionValue3Property(), new NumberStringConverter());
-        display4.textProperty().bindBidirectional(productionValue4Property(), new NumberStringConverter());
-        displaySum.textProperty().bind(productionSum.asString("%.0f"));
+        String format = "%.1f";
+
+        display1.textProperty().bindBidirectional(userFacingString1Property());
+        display2.textProperty().bindBidirectional(userFacingString2Property());
+        display3.textProperty().bindBidirectional(userFacingString3Property());
+        display4.textProperty().bindBidirectional(userFacingString4Property());
+
+        displaySum.textProperty().bind(productionSum.asString(format));
         sumText.textProperty().bind(sumTitleProperty());
         title.textProperty().bind(ccTitle);
 
-        productionValue1.bindBidirectional(rootPM.getWindProxy().mw15Property());
-        productionValue2.bindBidirectional(rootPM.getWindProxy().mw16Property());
-        productionValue3.bindBidirectional(rootPM.getWindProxy().mw17Property());
-        productionValue4.bindBidirectional(rootPM.getWindProxy().mw18Property());
+        ranking1.textProperty().bind(rankingVal1Property());
+        ranking2.textProperty().bind(rankingVal2Property());
+        ranking3.textProperty().bind(rankingVal3Property());
+        ranking4.textProperty().bind(rankingVal4Property());
     }
 
-    //- Own Methode
+//########------------Own Methods:----------------##########
+
+    public void keyPressedCheck(KeyEvent key, int valNr)
+    {
+        System.out.println(key.getCode());
+        switch (key.getCode())
+        {
+            case UP:
+                if(valNr == 1) setProductionValue1(getProductionValue1() + 100);
+                if(valNr == 2) setProductionValue2(getProductionValue2() + 100);
+                if(valNr == 3) setProductionValue3(getProductionValue3() + 100);
+                if(valNr == 4) setProductionValue4(getProductionValue4() + 100);
+                key.consume();
+                break;
+            case DOWN:
+                if(valNr == 1) setProductionValue1(getProductionValue1() - 100);
+                if(valNr == 2) setProductionValue2(getProductionValue2() - 100);
+                if(valNr == 3) setProductionValue3(getProductionValue3() - 100);
+                if(valNr == 4) setProductionValue4(getProductionValue4() - 100);
+                key.consume();
+                break;
+            case RIGHT:
+                if(valNr == 1) setProductionValue1(getProductionValue1() + 1);
+                if(valNr == 2) setProductionValue2(getProductionValue2() + 1);
+                if(valNr == 3) setProductionValue3(getProductionValue3() + 1);
+                if(valNr == 4) setProductionValue4(getProductionValue4() + 1);
+                key.consume();
+                break;
+            case LEFT:
+                if(valNr == 1) setProductionValue1(getProductionValue1() - 1);
+                if(valNr == 2) setProductionValue2(getProductionValue2() - 1);
+                if(valNr == 3) setProductionValue3(getProductionValue3() - 1);
+                if(valNr == 4) setProductionValue4(getProductionValue4() - 1);
+                key.consume();
+                break;
+        }
+    }
+
+    public void convert(int pos)
+    {
+        switch (pos)
+        {
+            case 1:
+                if (isConvertible1()) {
+                    System.out.println("Was in convert1()");
+                    if(getUserFacingString1().equals("t")){
+                        setProductionValue1(0);
+                        setProductionValue1(1000);
+                    }
+                    if(getUserFacingString1().equals("h")){
+                        setProductionValue1(0);
+                        setProductionValue1(100);
+                    }
+                }
+                break;
+            case 2:
+                if (isConvertible2()) {
+                    System.out.println("Was in convert2()");
+                    if(getUserFacingString2().equals("t")){
+                        setProductionValue2(0);
+                        setProductionValue2(1000);
+                    }
+                    if(getUserFacingString2().equals("h")){
+                        setProductionValue2(0);
+                        setProductionValue2(100);
+                    }
+                }
+                break;
+            case 3:
+                if (isConvertible3()) {
+                    System.out.println("Was in convert3()");
+                    if(getUserFacingString3().equals("t")){
+                        setProductionValue3(0);
+                        setProductionValue3(1000);
+                    }
+                    if(getUserFacingString3().equals("h")){
+                        setProductionValue3(0);
+                        setProductionValue3(100);
+                    }
+                }
+                break;
+            case 4:
+                if (isConvertible4()) {
+                    System.out.println("Was in convert4()");
+                    if(getUserFacingString4().equals("t")){
+                        setProductionValue4(0);
+                        setProductionValue4(1000);
+                    }
+                    if(getUserFacingString4().equals("h")){
+                        setProductionValue4(0);
+                        setProductionValue4(100);
+                    }
+                }
+                break;
+        }
+    }
+
     private void calculateSum()
     {
         double sum = 0.0;
@@ -585,7 +787,10 @@ public class GummibaerenDashboard extends Region {
         {
             buttonText1.setText(CHECK);
             setUnCheckedSum1(false);
-            sum += getProductionValue1();
+            if(getProductionValue1() >= 0.0)
+            {
+                sum += getProductionValue1();
+            }
         }
         else
         {
@@ -597,7 +802,10 @@ public class GummibaerenDashboard extends Region {
         {
             buttonText2.setText(CHECK);
             setUnCheckedSum2(false);
-            sum += getProductionValue2();
+            if(getProductionValue2() >= 0.0)
+            {
+                sum += getProductionValue2();
+            }
         }
         else
         {
@@ -609,20 +817,25 @@ public class GummibaerenDashboard extends Region {
         {
             buttonText3.setText(CHECK);
             setUnCheckedSum3(false);
-            sum += getProductionValue3();
+            if(getProductionValue3() >= 0.0)
+            {
+                sum += getProductionValue3();
+            }
         }
         else
         {
             setUnCheckedSum3(true);
             buttonText3.setText(PLUS);
-            setUnCheckedSum3(true);
         }
 
         if(isProduction4checked())
         {
             buttonText4.setText(CHECK);
             setUnCheckedSum4(false);
-            sum += getProductionValue4();
+            if(getProductionValue4() >= 0.0)
+            {
+                sum += getProductionValue4();
+            }
         }
         else
         {
@@ -630,21 +843,141 @@ public class GummibaerenDashboard extends Region {
             setUnCheckedSum4(true);
         }
 
+        //- Set Ranking
+        checkRankingPlace();
+        //- Calculat Sum
         setProductionSum(sum);
+    }
 
-        //setProductionSum(getProductionValue1() + getProductionValue2() + getProductionValue3() + getProductionValue4());
+    private boolean setConvertible(String newValue)
+    {
+        if(newValue.equals("t")){
+            return true;
+        }
+        else if(newValue.equals("h")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private void checkRankingPlace()
+    {
+        double[] valArray = {getProductionValue1(), getProductionValue2(), getProductionValue3(), getProductionValue4()};
+        String[] rankArray = {"1st", "2nd", "3rd", "4th"};
+
+        Arrays.sort(valArray);
+
+        rankingVal1.setValue("_");
+        rankingVal2.setValue("_");
+        rankingVal3.setValue("_");
+        rankingVal4.setValue("_");
+
+        //- Value for index and Ranking
+        int k = 0;
+        boolean contVal = false;
+
+        for(int i = 0; i < valArray.length; i++)
+        {
+            if(valArray[(valArray.length -1) - i] == getProductionValue1() & !isUnCheckedSum1() & ("_").equals(ranking1.getText()))
+            {
+                rankingVal1.setValue(rankArray[k]);
+                contVal = true;
+            }
+            if(valArray[(valArray.length -1) - i] == getProductionValue2() & !isUnCheckedSum2() & ("_").equals(ranking2.getText()))
+            {
+                rankingVal2.setValue(rankArray[k]);
+                contVal = true;
+            }
+            if(valArray[(valArray.length -1) - i] == getProductionValue3() & !isUnCheckedSum3() & ("_").equals(ranking3.getText()))
+            {
+                rankingVal3.setValue(rankArray[k]);
+                contVal = true;
+            }
+            if(valArray[(valArray.length -1) - i] == getProductionValue4() & !isUnCheckedSum4() & ("_").equals(ranking4.getText()))
+            {
+                rankingVal4.setValue(rankArray[k]);
+                contVal = true;
+            }
+            if(contVal)
+            {
+                k++;
+                contVal = false;
+            }
+        }
+    }
+
+    public void checkNewValueSet(String newValue, int valNr)
+    {
+        boolean newValueValid1 = false;
+        boolean newValueValid2 = false;
+        double newprodVal = 0.0;
+        //valid/invalid status:
+        if(newValue.equals("t") || newValue.equals("h") || Pattern.matches(CONVERTIBLE_REGEX, newValue)){
+            newValueValid1 = true;
+            if(Pattern.matches(CONVERTIBLE_REGEX, newValue)){
+                newprodVal = Double.valueOf(newValue);
+                newValueValid2 = true;
+            }
+        }
+
+        //- Set Values
+        if(newValueValid1) {
+            switch (valNr) {
+                case 1:
+                    if(newValueValid2){
+                        setProductionValue1(newprodVal);
+                    }
+                    setInvalid1(false);
+                    break;
+                case 2:
+                    if(newValueValid2){
+                        setProductionValue2(newprodVal);
+                    }
+                    setInvalid2(false);
+                    break;
+                case 3:
+                    if(newValueValid2){
+                        setProductionValue3(newprodVal);
+                    }
+                    setInvalid3(false);
+                    break;
+                case 4:
+                    if(newValueValid2){
+                        setProductionValue4(newprodVal);
+                    }
+                    setInvalid4(false);
+                    break;
+            }
+        }
+        else
+        {
+            switch (valNr) {
+                case 1:
+                    setInvalid1(true);
+                    break;
+                case 2:
+                    setInvalid2(true);
+                    break;
+                case 3:
+                    setInvalid3(true);
+                    break;
+                case 4:
+                    setInvalid4(true);
+                    break;
+            }
+        }
     }
 
 
-
-
-    // Special Methodes
+//########------------Special Methods:----------------##########
 
     private void updateUI(){
         onTransition.stop();  // wenn schon gestoppt macht diese Methode stop() garnichts
         offTransition.stop();
 
-        if(isOn()){
+        if(getSwitchOn()){
             //thumb.setLayoutX(16);
             onTransition.play();
             setNight(true);
@@ -658,7 +991,7 @@ public class GummibaerenDashboard extends Region {
     }
 
     private void performPeriodicTask(){
-        //ToDo: ergaenzen mit dem was bei der getakteten Animation gemacht werden muss
+        //ergaenzen mit dem was bei der getakteten Animation gemacht werden muss
         //normalerweise: den Wert einer der Status-Properties aendern
     }
 
@@ -676,7 +1009,7 @@ public class GummibaerenDashboard extends Region {
         resize();
     }
 
-    //ToDo: ueberpruefen ob dieser Resizing-Ansatz anwendbar ist.
+    //- Resizing-Ansatz
     private void resize() {
         Insets padding         = getPadding();
         double availableWidth  = getWidth() - padding.getLeft() - padding.getRight();
@@ -687,7 +1020,7 @@ public class GummibaerenDashboard extends Region {
         double scalingFactor = width / ARTBOARD_WIDTH;
 
         if (availableWidth > 0 && availableHeight > 0) {
-            //ToDo: ueberpruefen ob die drawingPane immer zentriert werden soll (eventuell ist zum Beispiel linksbuendig angemessener)
+            //drawingPane immer zentriert
             relocateDrawingPaneCentered();
             drawingPane.setScaleX(scalingFactor);
             drawingPane.setScaleY(scalingFactor);
@@ -696,21 +1029,6 @@ public class GummibaerenDashboard extends Region {
 
     private void relocateDrawingPaneCentered() {
         drawingPane.relocate((getWidth() - ARTBOARD_WIDTH) * 0.5, (getHeight() - ARTBOARD_HEIGHT) * 0.5);
-    }
-
-    private void relocateDrawingPaneCenterBottom(double scaleY, double paddingBottom) {
-        double visualHeight = ARTBOARD_HEIGHT * scaleY;
-        double visualSpace  = getHeight() - visualHeight;
-        double y            = visualSpace + (visualHeight - ARTBOARD_HEIGHT) * 0.5 - paddingBottom;
-
-        drawingPane.relocate((getWidth() - ARTBOARD_WIDTH) * 0.5, y);
-    }
-
-    private void relocateDrawingPaneCenterTop(double scaleY, double paddingTop) {
-        double visualHeight = ARTBOARD_HEIGHT * scaleY;
-        double y            = (visualHeight - ARTBOARD_HEIGHT) * 0.5 + paddingTop;
-
-        drawingPane.relocate((getWidth() - ARTBOARD_WIDTH) * 0.5, y);
     }
 
     // Sammlung nuetzlicher Funktionen
@@ -729,10 +1047,22 @@ public class GummibaerenDashboard extends Region {
         return text;
     }
 
+    private Text createCenteredTextRanking(String ranking, double cx, double cy, String styleClass) {
+        Text text = new Text(ranking);
+        text.getStyleClass().add(styleClass);
+        text.setTextOrigin(VPos.CENTER);
+        text.setTextAlignment(TextAlignment.CENTER);
+        double width = cx > ARTBOARD_WIDTH * 0.5 ? ((ARTBOARD_WIDTH - cx) * 2.0) : cx * 2.0;
+        text.setWrappingWidth(width);
+        text.setBoundsType(TextBoundsType.VISUAL);
+        text.setY(cy);
+        text.setX(cx - (width / 2.0));
+
+        return text;
+    }
 
 
-
-    //ToDo: diese Funktionen anschauen und für die Umsetzung des CustomControls benutzen
+    //- Funktionen für die Umsetzung des CustomControls
 
     private void loadFonts(String... font){
         for(String f : font){
@@ -769,40 +1099,6 @@ public class GummibaerenDashboard extends Region {
      */
     private double valueToPercentage(double value, double minValue, double maxValue) {
         return (value - minValue) / (maxValue - minValue);
-    }
-
-    /**
-     * Berechnet den Winkel zwischen 0 und 360 Grad, 0 Grad entspricht "Nord", der dem value
-     * innerhalb des Wertebereichs zwischen minValue und maxValue entspricht.
-     *
-     * @param value der aktuelle Wert
-     * @param minValue untere Grenze des Wertebereichs
-     * @param maxValue obere Grenze des Wertebereichs
-     * @return angle Winkel zwischen 0 und 360 Grad
-     */
-    private double valueToAngle(double value, double minValue, double maxValue) {
-        return percentageToAngle(valueToPercentage(value, minValue, maxValue));
-    }
-
-    /**
-     * Umrechnung der Maus-Position auf den aktuellen Wert.
-     *
-     * Diese Funktion ist sinnvoll nur fuer radiale Controls einsetzbar.
-     *
-     * Lineare Controls wie Slider müssen auf andere Art die Mausposition auf den value umrechnen.
-     *
-     * @param mouseX x-Position der Maus
-     * @param mouseY y-Position der Maus
-     * @param cx x-Position des Zentrums des radialen Controls
-     * @param cy y-Position des Zentrums des radialen Controls
-     * @param minValue untere Grenze des Wertebereichs
-     * @param maxValue obere Grenze des Wertebereichs
-     * @return value der dem Winkel entspricht, in dem die Maus zum Mittelpunkt des radialen Controls steht
-     */
-    private double radialMousePositionToValue(double mouseX, double mouseY, double cx, double cy, double minValue, double maxValue){
-        double percentage = angleToPercentage(angle(cx, cy, mouseX, mouseY));
-
-        return percentageToValue(percentage, minValue, maxValue);
     }
 
     /**
@@ -864,17 +1160,6 @@ public class GummibaerenDashboard extends Region {
     }
 
     /**
-     * Erzeugt eine Text-Instanz in der Mitte des CustomControls.
-     * Der Text bleibt zentriert auch wenn der angezeigte Text sich aendert.
-     *
-     * @param styleClass mit dieser StyleClass kann der erzeugte Text via css gestyled werden
-     * @return Text
-     */
-    private Text createCenteredText(String styleClass) {
-        return createCenteredText(ARTBOARD_WIDTH * 0.5, ARTBOARD_HEIGHT * 0.5, styleClass);
-    }
-
-    /**
      * Erzeugt eine Text-Instanz mit dem angegebenen Zentrum.
      * Der Text bleibt zentriert auch wenn der angezeigte Text sich aendert.
      *
@@ -901,46 +1186,11 @@ public class GummibaerenDashboard extends Region {
         textField.getStyleClass().add(styleClass);
         textField.setAlignment(Pos.CENTER);
         textField.setLayoutY(30);
-        textField.setLayoutX(13);
+        textField.setLayoutX(10);
 
         return textField;
     }
 
-    /**
-     * Erzeugt eine Group von Lines, die zum Beispiel fuer Skalen oder Zifferblaetter verwendet werden koennen.
-     *
-     * Diese Funktion ist sinnvoll nur fuer radiale Controls einsetzbar.
-     * @param cx x-Position des Zentrumspunkts
-     * @param cy y-Position des Zentrumspunkts
-     * @param radius radius auf dem die Anfangspunkte der Ticks liegen
-     * @param numberOfTicks gewuenschte Anzahl von Ticks
-     * @param startingAngle Wickel in dem der erste Tick liegt, zwischen 0 und 360 Grad
-     * @param overallAngle gewuenschter Winkel zwischen den erzeugten Ticks, zwischen 0 und 360 Grad
-     * @param tickLength Laenge eines Ticks
-     * @param styleClass Name der StyleClass mit der ein einzelner Tick via css gestyled werden kann
-     * @return Group mit allen Ticks
-     */
-    private Group createTicks(double cx, double cy, double radius, int numberOfTicks, double startingAngle, double overallAngle,  double tickLength, String styleClass) {
-        Group group = new Group();
-
-        double degreesBetweenTicks = overallAngle == 360 ?
-                                     overallAngle / numberOfTicks :
-                                     overallAngle /(numberOfTicks - 1);
-        double innerRadius         = radius - tickLength;
-
-        for (int i = 0; i < numberOfTicks; i++) {
-            double angle = startingAngle + i * degreesBetweenTicks;
-
-            Point2D startPoint = pointOnCircle(cx, cy, radius,      angle);
-            Point2D endPoint   = pointOnCircle(cx, cy, innerRadius, angle);
-
-            Line tick = new Line(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
-            tick.getStyleClass().add(styleClass);
-            group.getChildren().add(tick);
-        }
-
-        return group;
-    }
 
     private String colorToCss(final Color color) {
   		return color.toString().replace("0x", "#");
@@ -981,9 +1231,8 @@ public class GummibaerenDashboard extends Region {
         return ARTBOARD_HEIGHT + verticalPadding;
     }
 
-    // alle getter und setter  (generiert via "Code -> Generate... -> Getter and Setter)
+    //- Getter und Setter  CustomControls ################################################
 
-    // ToDo: ersetzen durch die Getter und Setter Ihres CustomControls
 
     public double getProductionValue1() {
         return productionValue1.get();
@@ -1057,29 +1306,6 @@ public class GummibaerenDashboard extends Region {
         this.baseColor.set(baseColor);
     }
 
-    public boolean isBlinking() {
-        return blinking.get();
-    }
-
-    public BooleanProperty blinkingProperty() {
-        return blinking;
-    }
-
-    public void setBlinking(boolean blinking) {
-        this.blinking.set(blinking);
-    }
-
-    public Duration getPulse() {
-        return pulse.get();
-    }
-
-    public ObjectProperty<Duration> pulseProperty() {
-        return pulse;
-    }
-
-    public void setPulse(Duration pulse) {
-        this.pulse.set(pulse);
-    }
 
     public String getCcTitle() {
         return ccTitle.get();
@@ -1091,6 +1317,19 @@ public class GummibaerenDashboard extends Region {
 
     public void setCcTitle(String ccTitle) {
         this.ccTitle.set(ccTitle);
+    }
+
+    //- Animation
+    public Duration getPulse() {
+        return pulse.get();
+    }
+
+    public ObjectProperty<Duration> pulseProperty() {
+        return pulse;
+    }
+
+    public void setPulse(Duration pulse) {
+        this.pulse.set(pulse);
     }
 
     //- Check / unCheck production1 - 4 #######################################################################
@@ -1206,18 +1445,69 @@ public class GummibaerenDashboard extends Region {
         this.SumTitle.set(sumTitle);
     }
 
+    //- Rankging Value
+
+    public String getRankingVal1() {
+        return rankingVal1.get();
+    }
+
+    public StringProperty rankingVal1Property() {
+        return rankingVal1;
+    }
+
+    public void setRankingVal1(String rankingVal1) {
+        this.rankingVal1.set(rankingVal1);
+    }
+
+    public String getRankingVal2() {
+        return rankingVal2.get();
+    }
+
+    public StringProperty rankingVal2Property() {
+        return rankingVal2;
+    }
+
+    public void setRankingVal2(String rankingVal2) {
+        this.rankingVal2.set(rankingVal2);
+    }
+
+    public String getRankingVal3() {
+        return rankingVal3.get();
+    }
+
+    public StringProperty rankingVal3Property() {
+        return rankingVal3;
+    }
+
+    public void setRankingVal3(String rankingVal3) {
+        this.rankingVal3.set(rankingVal3);
+    }
+
+    public String getRankingVal4() {
+        return rankingVal4.get();
+    }
+
+    public StringProperty rankingVal4Property() {
+        return rankingVal4;
+    }
+
+    public void setRankingVal4(String rankingVal4) {
+        this.rankingVal4.set(rankingVal4);
+    }
+
+
     //- Switch Control
 
-    public boolean isOn() {
-        return on.get();
+    public boolean getSwitchOn() {
+        return switchOn.get();
     }
 
-    public BooleanProperty onProperty() {
-        return on;
+    public BooleanProperty switchOnProperty() {
+        return switchOn;
     }
 
-    public void setOn(boolean on) {
-        this.on.set(on);
+    public void setSwitchOn(boolean switchOn) {
+        this.switchOn.set(switchOn);
     }
 
     public boolean isNight() {
@@ -1230,5 +1520,151 @@ public class GummibaerenDashboard extends Region {
 
     public void setNight(boolean night) {
         this.night.set(night);
+    }
+
+    //- Is Valid
+
+    public boolean isInvalid1() {
+        return invalid1.get();
+    }
+
+    public BooleanProperty invalid1Property() {
+        return invalid1;
+    }
+
+    public void setInvalid1(boolean invalid1) {
+        this.invalid1.set(invalid1);
+    }
+
+    public boolean isInvalid2() {
+        return invalid2.get();
+    }
+
+    public BooleanProperty invalid2Property() {
+        return invalid2;
+    }
+
+    public void setInvalid2(boolean invalid2) {
+        this.invalid2.set(invalid2);
+    }
+
+    public boolean isInvalid3() {
+        return invalid3.get();
+    }
+
+    public BooleanProperty invalid3Property() {
+        return invalid3;
+    }
+
+    public void setInvalid3(boolean invalid3) {
+        this.invalid3.set(invalid3);
+    }
+
+    public boolean isInvalid4() {
+        return invalid4.get();
+    }
+
+    public BooleanProperty invalid4Property() {
+        return invalid4;
+    }
+
+    public void setInvalid4(boolean invalid4) {
+        this.invalid4.set(invalid4);
+    }
+
+    public boolean isConvertible1() {
+        return convertible1.get();
+    }
+
+    public BooleanProperty convertible1Property() {
+        return convertible1;
+    }
+
+    public void setConvertible1(boolean convertible1) {
+        this.convertible1.set(convertible1);
+    }
+
+    public boolean isConvertible2() {
+        return convertible2.get();
+    }
+
+    public BooleanProperty convertible2Property() {
+        return convertible2;
+    }
+
+    public void setConvertible2(boolean convertible2) {
+        this.convertible2.set(convertible2);
+    }
+
+    public boolean isConvertible3() {
+        return convertible3.get();
+    }
+
+    public BooleanProperty convertible3Property() {
+        return convertible3;
+    }
+
+    public void setConvertible3(boolean convertible3) {
+        this.convertible3.set(convertible3);
+    }
+
+    public boolean isConvertible4() {
+        return convertible4.get();
+    }
+
+    public BooleanProperty convertible4Property() {
+        return convertible4;
+    }
+
+    public void setConvertible4(boolean convertible4) {
+        this.convertible4.set(convertible4);
+    }
+
+    public String getUserFacingString1() {
+        return userFacingString1.get();
+    }
+
+    public StringProperty userFacingString1Property() {
+        return userFacingString1;
+    }
+
+    public void setUserFacingString1(String userFacingString1) {
+        this.userFacingString1.set(userFacingString1);
+    }
+
+    public String getUserFacingString2() {
+        return userFacingString2.get();
+    }
+
+    public StringProperty userFacingString2Property() {
+        return userFacingString2;
+    }
+
+    public void setUserFacingString2(String userFacingString2) {
+        this.userFacingString2.set(userFacingString2);
+    }
+
+    public String getUserFacingString3() {
+        return userFacingString3.get();
+    }
+
+    public StringProperty userFacingString3Property() {
+        return userFacingString3;
+    }
+
+    public void setUserFacingString3(String userFacingString3) {
+        this.userFacingString3.set(userFacingString3);
+    }
+
+    public String getUserFacingString4() {
+        return userFacingString4.get();
+    }
+
+    public StringProperty userFacingString4Property() {
+        return userFacingString4;
+    }
+
+    public void setUserFacingString4(String userFacingString4) {
+        this.userFacingString4.set(userFacingString4);
     }
 }

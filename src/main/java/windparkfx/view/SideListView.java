@@ -7,7 +7,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import windparkfx.presentationmodel.WindDataPM;
-import windparkfx.view.gummibaerenDashboard.GummibaerenDashboard;
+import windparkfx.view.GummibaerenDashboard.GummibaerenDashboard;
+
 
 /**
  * @author Mario Wettstein
@@ -42,7 +43,7 @@ public class SideListView extends VBox implements ViewMixin {
         imageView = new ImageView();
 
         //- GummibaerenDashboard
-        gummibaerenDashboard = new GummibaerenDashboard(rootPM);
+        gummibaerenDashboard = new GummibaerenDashboard();
 
         windTable = initializeResultatTabelle();
         windTable.setEditable(true);

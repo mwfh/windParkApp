@@ -3,13 +3,14 @@ package windparkfx.view;
 
 import javafx.scene.layout.VBox;
 import windparkfx.presentationmodel.RootPM;
+import windparkfx.view.GummibaerenDashboard.GummibaerenDashboard;
 import windparkfx.view.NewHeader_Toolbar.HeaderToolbar;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
-import windparkfx.view.gummibaerenDashboard.GummibaerenDashboard;
+
 
 /**
  * @author Mario Wettstein
@@ -79,7 +80,7 @@ public class RootPanel extends BorderPane implements ViewMixin {
         titleBoardView      = new TitleBoardView(rootPM);
 
         //- gummibaerenDashboard
-        gummibaerenDashboard = new GummibaerenDashboard(rootPM);
+        gummibaerenDashboard = new GummibaerenDashboard();
     }
 
     @Override
