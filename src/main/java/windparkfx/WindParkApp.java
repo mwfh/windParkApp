@@ -26,8 +26,8 @@ public class WindParkApp extends Application {
 		RootPM rootPM = new RootPM();
 
 		//- StyleChooser
-		//rootPM.setStyleChoose("styleday.css");
-		rootPM.setStyleChoose("stylenight.css");
+		rootPM.setStyleChoose("styleday.css");
+		//rootPM.setStyleChoose("stylenight.css");
 		//rootPM.setStyleChoose("style_new.css");
 
 		Parent rootPanel = new RootPanel(rootPM);
@@ -39,7 +39,6 @@ public class WindParkApp extends Application {
 		primaryStage.show();
 
 		rootPM.load_first_wind_entry();
-
 
 		//- Customer - Control
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

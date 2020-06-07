@@ -307,12 +307,12 @@ public class RootPM{
 
     public void load_first_wind_entry()
     {
-        setSelectWindID(getWind_result().stream()
-                .sorted(Comparator.comparingInt(value -> value.getId()))
-                .mapToInt(value -> value.getId())
-                .min()
-                .getAsInt());
-
+//        setSelectWindID(getWind_result().stream()
+//                .sorted(Comparator.comparingInt(value -> value.getId()))
+//                .mapToInt(value -> value.getId())
+//                .min()
+//                .getAsInt());
+        setSelectWindID(1013);
     }
 
     //- Wind-Data behandeln ####################################################
