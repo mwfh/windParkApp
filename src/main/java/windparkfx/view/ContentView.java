@@ -159,17 +159,17 @@ public class ContentView extends GridPane implements ViewMixin{
     @Override
     public void layoutControls() {
         ColumnConstraints spaceColumn           = new ColumnConstraints(10,10, Double.MAX_VALUE);
-        ColumnConstraints columnLabelLeft       = new ColumnConstraints(180,200, Double.MAX_VALUE);
+        ColumnConstraints columnLabelLeft       = new ColumnConstraints(130,130, Double.MAX_VALUE);
         ColumnConstraints columnSpaceLeft       = new ColumnConstraints(20,20, Double.MAX_VALUE);
-        ColumnConstraints columnInputLeft       = new ColumnConstraints(130,220, Double.MAX_VALUE);
+        ColumnConstraints columnInputLeft       = new ColumnConstraints(130,130, Double.MAX_VALUE);
         ColumnConstraints columnSpaceMiddle     = new ColumnConstraints(20,20, Double.MAX_VALUE);
-        ColumnConstraints columnLabelRight      = new ColumnConstraints(180,200, Double.MAX_VALUE);
+        ColumnConstraints columnLabelRight      = new ColumnConstraints(130,130, Double.MAX_VALUE);
         ColumnConstraints columnSpaceRight      = new ColumnConstraints(20,20, Double.MAX_VALUE);
-        ColumnConstraints columnInputRight      = new ColumnConstraints(130,220, Double.MAX_VALUE);
+        ColumnConstraints columnInputRight      = new ColumnConstraints(130,130, Double.MAX_VALUE);
 
         setMinSize(600,400);
         setMaxSize(1200,1200);
-        getColumnConstraints().addAll(spaceColumn,columnLabelLeft, columnSpaceLeft, columnInputLeft, columnSpaceMiddle, columnLabelRight, columnSpaceRight, columnInputRight, spaceColumn);
+        getColumnConstraints().addAll(spaceColumn,columnLabelLeft, columnSpaceLeft, columnInputLeft, columnSpaceMiddle, columnLabelRight, columnSpaceRight, columnInputRight);
 
 
         RowConstraints spaceRow   = new RowConstraints(10,10, Double.MAX_VALUE);
@@ -182,7 +182,7 @@ public class ContentView extends GridPane implements ViewMixin{
         RowConstraints row07      = new RowConstraints(40,40, Double.MAX_VALUE);
 
         //RowConstraints row08      = new RowConstraints(40,40, Double.MAX_VALUE);
-        RowConstraints row08      = new RowConstraints(140,90, Double.MAX_VALUE);
+        RowConstraints row08      = new RowConstraints(130,130, Double.MAX_VALUE);
 
         RowConstraints row09      = new RowConstraints(40,40, Double.MAX_VALUE);
         RowConstraints row10      = new RowConstraints(40,40, Double.MAX_VALUE);

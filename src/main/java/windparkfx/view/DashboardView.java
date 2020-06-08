@@ -71,13 +71,13 @@ public class DashboardView extends GridPane implements ViewMixin{
     @Override
     public void layoutControls() {
         ColumnConstraints Space                         = new ColumnConstraints(10,10, Double.MAX_VALUE);
-        ColumnConstraints colHead01                     = new ColumnConstraints(250,250, Double.MAX_VALUE);
-        ColumnConstraints colHead02                     = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints colHead03                     = new ColumnConstraints(350,350, Double.MAX_VALUE);
+        ColumnConstraints colHead01                     = new ColumnConstraints(160,160, 160);
+        ColumnConstraints colHead02                     = new ColumnConstraints(100,100, 100);
+        ColumnConstraints colHead03                     = new ColumnConstraints(320,320, 320);
 
         //setMinSize(600,300);
-//        setMinSize(800,500);
-//        setMaxSize(800,500);
+        setMinSize(600,250);
+        setMaxSize(1200,300);
         getColumnConstraints().addAll(Space,colHead01, colHead02, colHead03, Space);
 
         RowConstraints SpaceTop           = new RowConstraints(10,10, Double.MAX_VALUE);

@@ -62,8 +62,10 @@ public class RootPanel extends BorderPane implements ViewMixin {
     @Override
     public void initializeControls() {
         splitPane           = new SplitPane();
-        splitPane.setMinWidth(800);
-        splitPane.setPrefWidth(1400);
+        splitPane.setMinWidth(600);
+        splitPane.setPrefWidth(1200);
+        splitPane.setMinHeight(600);
+        splitPane.setPrefHeight(800);
         splitPane.getStyleClass().add("root-panel-split-pane");
 
         //headerView          = new HeaderView(rootPM);
