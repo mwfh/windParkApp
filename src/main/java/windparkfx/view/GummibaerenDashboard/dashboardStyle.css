@@ -268,7 +268,7 @@
 }
 
 .gummibaeren-dashboard:unchecked-sum1 .displays1 {
-    -fx-background-color: -addToSumDisabled;
+    -fx-background-color: -middle-grey;
 }
 /* ##################################################*/
 
@@ -307,7 +307,7 @@
 }
 
 .gummibaeren-dashboard:unchecked-sum2 .displays2 {
-    -fx-background-color: -addToSumDisabled;
+    -fx-background-color: -middle-grey;
 }
 /* ##################################################*/
 
@@ -346,7 +346,7 @@
 }
 
 .gummibaeren-dashboard:unchecked-sum3 .displays3 {
-    -fx-background-color: -addToSumDisabled;
+    -fx-background-color: -middle-grey;
 }
 /* ##################################################*/
 
@@ -385,7 +385,7 @@
 }
 
 .gummibaeren-dashboard:unchecked-sum4 .displays4 {
-    -fx-background-color: -addToSumDisabled;
+    -fx-background-color: -middle-grey;
 }
 /* Display Textfield Ende ##################################################*/
 

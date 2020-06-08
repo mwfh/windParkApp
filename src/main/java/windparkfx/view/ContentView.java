@@ -153,8 +153,9 @@ public class ContentView extends GridPane implements ViewMixin{
         input2016               = new TextField();
         input2018               = new TextField();
 
-        //- gummibaerenDashboard
+        //- gummibaerenDashboard #######################################################################################
         gummibaerenDashboard    = new GummibaerenDashboard();
+        //- gummibaerenDashboard #######################################################################################
 
         //setGridLinesVisible(true); //- Grind einblenden
     }
@@ -239,8 +240,10 @@ public class ContentView extends GridPane implements ViewMixin{
 //        add(input2016,              7,8,1,1);
 //        add(input2018,              7,9,1,1);
 
-        //- GummibaerenDashboard
+
+        //- GummibaerenDashboard #######################################################################################
         add(gummibaerenDashboard,              1,8,7,2);
+        //- GummibaerenDashboard #######################################################################################
 
     }
 
@@ -268,11 +271,16 @@ public class ContentView extends GridPane implements ViewMixin{
         input2016.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw16Property(), new NumberStringConverter());
         input2018.textProperty()                .bindBidirectional(rootPM.getWindProxy().mw18Property(), new NumberStringConverter());
 
-        //- Binding gummibaeren Dashboard
+
+
+
+
+        //- Binding gummibaeren Dashboard -################################################################################################
         gummibaerenDashboard.productionValue1Property().bindBidirectional(rootPM.getWindProxy().mw15Property());
         gummibaerenDashboard.productionValue2Property().bindBidirectional(rootPM.getWindProxy().mw16Property());
         gummibaerenDashboard.productionValue3Property().bindBidirectional(rootPM.getWindProxy().mw17Property());
         gummibaerenDashboard.productionValue4Property().bindBidirectional(rootPM.getWindProxy().mw18Property());
+        //- Binding gummibaeren Dashboard -################################################################################################
 
     }
 
@@ -327,7 +335,6 @@ public class ContentView extends GridPane implements ViewMixin{
     @Override
     public void setupValueChangedListeners() {
         gummibaerenDashboard.switchOffProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Changed Switch " + newValue);
             rootPM.setChangeDesign(newValue);
         });
     }
