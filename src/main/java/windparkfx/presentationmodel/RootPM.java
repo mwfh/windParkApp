@@ -53,6 +53,19 @@ public class RootPM{
     //- CSS File value:
     private String styleChoose = "";
 
+    //- Boolean for Design
+    private final BooleanProperty changeDesign = new SimpleBooleanProperty(false);
+    public boolean isChangeDesign() {
+        return changeDesign.get();
+    }
+    public BooleanProperty changeDesignProperty() {
+        return changeDesign;
+    }
+    public void setChangeDesign(boolean changeDesign) {
+        this.changeDesign.set(changeDesign);
+    }
+
+
     public RootPM() {
 
         //hydro_resultat.addAll(Hydro_readFromFile());
@@ -583,4 +596,7 @@ public class RootPM{
     public void setStyleChoose(String styleChoose) {
         this.styleChoose = styleChoose;
     }
+
+
+
 }

@@ -1,5 +1,8 @@
 package windparkfx.view;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.util.converter.NumberStringConverter;
 import windparkfx.presentationmodel.RootPM;
 import javafx.scene.control.Label;
@@ -320,6 +323,13 @@ public class ContentView extends GridPane implements ViewMixin{
         });
     }
 
-
+    //ALT + fn + EINFG
+    @Override
+    public void setupValueChangedListeners() {
+        gummibaerenDashboard.switchOffProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Changed Switch " + newValue);
+            rootPM.setChangeDesign(newValue);
+        });
+    }
 
 }

@@ -26,9 +26,9 @@ public class WindParkApp extends Application {
 		RootPM rootPM = new RootPM();
 
 		//- StyleChooser
-		rootPM.setStyleChoose("styleday.css");
+		//rootPM.setStyleChoose("styleday.css");
 		//rootPM.setStyleChoose("stylenight.css");
-		//rootPM.setStyleChoose("style_new.css");
+		rootPM.setStyleChoose("style_new.css");
 
 		Parent rootPanel = new RootPanel(rootPM);
 

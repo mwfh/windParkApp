@@ -1,6 +1,9 @@
 package windparkfx.view;
 
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.scene.layout.VBox;
 import windparkfx.presentationmodel.RootPM;
 import windparkfx.view.GummibaerenDashboard.GummibaerenDashboard;
@@ -102,11 +105,49 @@ public class RootPanel extends BorderPane implements ViewMixin {
 
     @Override
     public void setupValueChangedListeners() {
-
+        rootPM.changeDesignProperty().addListener((observable, oldValue, newValue) -> {
+            setBackgroundColors(newValue);
+        });
     }
+
 
     @Override
     public void setupBindings() {
 
     }
+
+    private void setBackgroundColors(boolean val){
+        if(val)
+        {
+            //this.setStyle("-fx-background-color: #1D1D1D");
+            contentView.getStylesheets().clear();
+            contentView.addStylesheetFiles("stylenight.css");
+
+            dashboardView.getStylesheets().clear();
+            dashboardView.addStylesheetFiles("stylenight.css");
+
+            sideListView.getStylesheets().clear();
+            sideListView.addStylesheetFiles("stylenight.css");
+
+            titleBoardView.getStylesheets().clear();
+            titleBoardView.addStylesheetFiles("stylenight.css");
+        }
+        else
+        {
+            //this.setStyle("-fx-background-color: #FFFEFA");
+            contentView.getStylesheets().clear();
+            contentView.addStylesheetFiles("styleday.css");
+
+            dashboardView.getStylesheets().clear();
+            dashboardView.addStylesheetFiles("styleday.css");
+
+            sideListView.getStylesheets().clear();
+            sideListView.addStylesheetFiles("styleday.css");
+
+            titleBoardView.getStylesheets().clear();
+            titleBoardView.addStylesheetFiles("styleday.css");
+        }
+    }
+
+
 }

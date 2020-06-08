@@ -152,4 +152,5 @@ public class SideListView extends VBox implements ViewMixin {
             windTable.itemsProperty().set(rootPM.getWindListFilter());
         });
     }
+
 }
