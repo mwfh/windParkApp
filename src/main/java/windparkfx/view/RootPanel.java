@@ -119,33 +119,36 @@ public class RootPanel extends BorderPane implements ViewMixin {
     private void setBackgroundColors(boolean val){
         if(val)
         {
+            String nightcss = "stylenight.css";
             //this.setStyle("-fx-background-color: #1D1D1D");
             contentView.getStylesheets().clear();
-            contentView.addStylesheetFiles("stylenight.css");
+            contentView.addStylesheetFiles(nightcss);
 
             dashboardView.getStylesheets().clear();
-            dashboardView.addStylesheetFiles("stylenight.css");
+            dashboardView.addStylesheetFiles(nightcss);
 
             sideListView.getStylesheets().clear();
-            sideListView.addStylesheetFiles("stylenight.css");
+            sideListView.addStylesheetFiles(nightcss);
 
             titleBoardView.getStylesheets().clear();
-            titleBoardView.addStylesheetFiles("stylenight.css");
+            titleBoardView.addStylesheetFiles(nightcss);
+
         }
         else
         {
+            String daycss = "styleday.css";
             //this.setStyle("-fx-background-color: #FFFEFA");
             contentView.getStylesheets().clear();
-            contentView.addStylesheetFiles("styleday.css");
+            contentView.addStylesheetFiles(daycss);
 
             dashboardView.getStylesheets().clear();
-            dashboardView.addStylesheetFiles("styleday.css");
+            dashboardView.addStylesheetFiles(daycss);
 
             sideListView.getStylesheets().clear();
-            sideListView.addStylesheetFiles("styleday.css");
+            sideListView.addStylesheetFiles(daycss);
 
             titleBoardView.getStylesheets().clear();
-            titleBoardView.addStylesheetFiles("styleday.css");
+            titleBoardView.addStylesheetFiles(daycss);
         }
     }
 
