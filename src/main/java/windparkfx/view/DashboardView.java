@@ -46,6 +46,8 @@ public class DashboardView extends GridPane implements ViewMixin{
     public void initializeControls() {
 
         titleVillage        = new Label();
+        titleVillage.setWrapText(true);
+
         titleVillage.getStyleClass().add("labeltitletext");
 
         titleCanton         = new Label();
@@ -71,11 +73,11 @@ public class DashboardView extends GridPane implements ViewMixin{
         ColumnConstraints Space                         = new ColumnConstraints(10,10, Double.MAX_VALUE);
         ColumnConstraints colHead01                     = new ColumnConstraints(250,250, Double.MAX_VALUE);
         ColumnConstraints colHead02                     = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        ColumnConstraints colHead03                     = new ColumnConstraints(328,328, Double.MAX_VALUE);
+        ColumnConstraints colHead03                     = new ColumnConstraints(350,350, Double.MAX_VALUE);
 
         //setMinSize(600,300);
-        setMinSize(600,500);
-        setMaxSize(1200,800);
+//        setMinSize(800,500);
+//        setMaxSize(800,500);
         getColumnConstraints().addAll(Space,colHead01, colHead02, colHead03, Space);
 
         RowConstraints SpaceTop           = new RowConstraints(10,10, Double.MAX_VALUE);
@@ -85,10 +87,10 @@ public class DashboardView extends GridPane implements ViewMixin{
         RowConstraints rowHead04           = new RowConstraints(35,35, Double.MAX_VALUE);
         RowConstraints rowHead05           = new RowConstraints(35,35, Double.MAX_VALUE);
 
-        RowConstraints gummibaerenRow             = new RowConstraints(190,190, Double.MAX_VALUE);
+//        RowConstraints gummibaerenRow             = new RowConstraints(220,220, Double.MAX_VALUE);
 
-        //getRowConstraints().addAll(SpaceTop, rowHead01, rowHead02, rowHead03, rowHead04, rowHead05, SpaceTop);
-        getRowConstraints().addAll(SpaceTop, rowHead01, rowHead02, rowHead03, rowHead04, rowHead05, SpaceTop, gummibaerenRow, SpaceTop);
+        getRowConstraints().addAll(SpaceTop, rowHead01, rowHead02, rowHead03, rowHead04, rowHead05, SpaceTop);
+        //getRowConstraints().addAll(SpaceTop, rowHead01, rowHead02, rowHead03, rowHead04, rowHead05, SpaceTop, gummibaerenRow, SpaceTop);
 
         //- Head
         add(titleVillage, 1, 1, 2, 1);
@@ -103,7 +105,7 @@ public class DashboardView extends GridPane implements ViewMixin{
         add(imageView, 3, 1, 1,5);
 
         //- Gummibaeren Dashboard
-        add(gummibaerenDashboard, 1, 7,3 , 1);
+        //add(gummibaerenDashboard, 1, 7,3 , 1);
 
     }
 
@@ -121,10 +123,10 @@ public class DashboardView extends GridPane implements ViewMixin{
         imageView.setFitWidth(320);
         imageView.imageProperty()               .bind(rootPM.getWindProxy().getImageView().imageProperty());
 
-        gummibaerenDashboard.productionValue1Property().bindBidirectional(rootPM.getWindProxy().mw15Property());
-        gummibaerenDashboard.productionValue2Property().bindBidirectional(rootPM.getWindProxy().mw16Property());
-        gummibaerenDashboard.productionValue3Property().bindBidirectional(rootPM.getWindProxy().mw17Property());
-        gummibaerenDashboard.productionValue4Property().bindBidirectional(rootPM.getWindProxy().mw18Property());
+//        gummibaerenDashboard.productionValue1Property().bindBidirectional(rootPM.getWindProxy().mw15Property());
+//        gummibaerenDashboard.productionValue2Property().bindBidirectional(rootPM.getWindProxy().mw16Property());
+//        gummibaerenDashboard.productionValue3Property().bindBidirectional(rootPM.getWindProxy().mw17Property());
+//        gummibaerenDashboard.productionValue4Property().bindBidirectional(rootPM.getWindProxy().mw18Property());
     }
 
     @Override
@@ -136,7 +138,5 @@ public class DashboardView extends GridPane implements ViewMixin{
         });
 
     }
-
-
 
 }

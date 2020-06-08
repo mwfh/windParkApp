@@ -58,9 +58,9 @@ public class GummibaerenDashboard extends Region {
 
     private static final double MAXIMUM_WIDTH = 1200;
     //Pattern
-    private static final String CONVERTIBLE_REGEX = "(\\d+([,’.])?\\d+([,’.])?\\d+|\\d+([,’.])?\\d+|\\d+|\\d )";
+    private static final String CONVERTIBLE_REGEX = "(\\d+([,’])?\\d+([,’])?\\d|\\d+([,’.])?\\d|\\d+|\\d )";
 
-//------------Declaration:----------------
+    //------------Declaration:----------------
     private Circle circle1;
     private Circle circle2;
     private Circle circle3;
@@ -86,8 +86,9 @@ public class GummibaerenDashboard extends Region {
     private Text   ranking3;
     private Text   ranking4;
 
-    private Text   displaySum;
-    private Text   sumText;
+    private Text    displaySumWithComma;
+    private Text    displaySumNoComma;
+    private Text    sumText;
 
     private Label   title;
 
@@ -126,7 +127,7 @@ public class GummibaerenDashboard extends Region {
     private final DoubleProperty productionValue3       =  new SimpleDoubleProperty();
     private final DoubleProperty productionValue4       =  new SimpleDoubleProperty();
     private final DoubleProperty  productionSum          =  new SimpleDoubleProperty();
-    private final StringProperty  SumTitle               =  new SimpleStringProperty("Gesamt (Gerundet)");
+    private final StringProperty  sumTitle               =  new SimpleStringProperty();
     private final StringProperty  rankingVal1            =  new SimpleStringProperty();
     private final StringProperty  rankingVal2            =  new SimpleStringProperty();
     private final StringProperty  rankingVal3            =  new SimpleStringProperty();
@@ -140,7 +141,7 @@ public class GummibaerenDashboard extends Region {
     private final StringProperty  userFacingString2      =  new SimpleStringProperty();
     private final StringProperty  userFacingString3      =  new SimpleStringProperty();
     private final StringProperty  userFacingString4      =  new SimpleStringProperty();
-    private final BooleanProperty switchOn               =  new SimpleBooleanProperty();
+    private final BooleanProperty switchOff              =  new SimpleBooleanProperty();
     private final ObjectProperty<Duration> pulse         =  new SimpleObjectProperty<>(Duration.seconds(1.0));
 
     //- alle CSS stylable properties
@@ -375,7 +376,8 @@ public class GummibaerenDashboard extends Region {
         display4 = createCenteredTextField(radiusMainCircle, radiusMainCircle ,"displays4");
 
         //sum
-        displaySum = createCenteredText(0, 18+7, "display-sum");
+        displaySumWithComma = createCenteredText(0, 18+7, "display-sum");
+        displaySumNoComma   = createCenteredText(0, 18+7, "display-sum");
         sumText = createCenteredText(0,46+7,"sum-text");
 
         //years
@@ -483,6 +485,7 @@ public class GummibaerenDashboard extends Region {
         drawingPane.setPrefSize(ARTBOARD_WIDTH, ARTBOARD_HEIGHT);
 
         checkRankingPlace();
+        displayCorrectSumFormat();
     }
 
 //------------initializeAnimations:----------------
@@ -506,7 +509,7 @@ public class GummibaerenDashboard extends Region {
 //------------layoutParts:----------------
     private void layoutParts() {
         //Add Elements to SumAndSwitchGrid
-        elementSumDraw.getChildren().addAll(displaySum,sumText);
+        elementSumDraw.getChildren().addAll(displaySumWithComma,displaySumNoComma, sumText);
         elementSwichDraw.getChildren().addAll(switchFrame, switchThumb);
 
         sumAndswitchGrid.add(elementSumDraw, 0, 1,3,1);
@@ -554,24 +557,20 @@ public class GummibaerenDashboard extends Region {
 
         //- Display Value KeyReleased
         display1.setOnKeyReleased(event -> {
-            System.out.println("in 2015");
             calculateSum();
         });
         display2.setOnKeyReleased(event -> {
-            System.out.println("in 2016");
             calculateSum();
         });
         display3.setOnKeyReleased(event -> {
-            System.out.println("in 2017");
             calculateSum();
         });
         display4.setOnKeyReleased(event -> {
-            System.out.println("in 2018");
             calculateSum();
         });
 
         //- Switch Control
-        elementSwichDraw.setOnMouseClicked(event -> setSwitchOn(!getSwitchOn()));
+        elementSwichDraw.setOnMouseClicked(event -> setSwitchOff(!getSwitchOff()));
 
         //forgiving format (convertible)
         display1.setOnAction(event -> convert(1));
@@ -597,11 +596,10 @@ public class GummibaerenDashboard extends Region {
 //------------setupValueChangeListeners:----------------
     private void setupValueChangeListeners() {
         //- for Update Animation
-        switchOnProperty().addListener((observable, oldValue, newValue) -> updateUI());
+        switchOffProperty().addListener((observable, oldValue, newValue) -> updateUI());
 
         //- ValueChangeListener ###########################
         userFacingString1.addListener((observable, oldValue, newValue) -> {
-            System.out.println("war im changeListener 1");
             checkNewValueSet(newValue,1);
 
             //forgiving format - convertible true/false setzen:
@@ -611,7 +609,6 @@ public class GummibaerenDashboard extends Region {
             calculateSum();
         });
         userFacingString2.addListener((observable, oldValue, newValue) -> {
-            System.out.println("war im changeListener 2");
             checkNewValueSet(newValue,2);
 
             //forgiving format - convertible true/false setzen:
@@ -621,7 +618,6 @@ public class GummibaerenDashboard extends Region {
             calculateSum();
         });
         userFacingString3.addListener((observable, oldValue, newValue) -> {
-            System.out.println("war im changeListener 3");
             checkNewValueSet(newValue,3);
 
             //forgiving format - convertible true/false setzen:
@@ -631,7 +627,6 @@ public class GummibaerenDashboard extends Region {
             calculateSum();
         });
         userFacingString4.addListener((observable, oldValue, newValue) -> {
-            System.out.println("war im changeListener 4");
             checkNewValueSet(newValue,4);
 
             //forgiving format - convertible true/false setzen:
@@ -662,18 +657,20 @@ public class GummibaerenDashboard extends Region {
             setUserFacingString4(newProdVal);
         });
 
+        productionSum.addListener((observable, oldValue, newValue) -> {
+            displayCorrectSumFormat();
+        });
     }
 
 //------------setupBindings:----------------
     private void setupBindings() {
-        String format = "%.1f";
-
         display1.textProperty().bindBidirectional(userFacingString1Property());
         display2.textProperty().bindBidirectional(userFacingString2Property());
         display3.textProperty().bindBidirectional(userFacingString3Property());
         display4.textProperty().bindBidirectional(userFacingString4Property());
 
-        displaySum.textProperty().bind(productionSum.asString(format));
+        displaySumWithComma.textProperty().bind(productionSum.asString("%.1f"));
+        displaySumNoComma.textProperty().bind(productionSum.asString("%.0f"));
         sumText.textProperty().bind(sumTitleProperty());
         title.textProperty().bind(ccTitle);
 
@@ -683,11 +680,22 @@ public class GummibaerenDashboard extends Region {
         ranking4.textProperty().bind(rankingVal4Property());
     }
 
-//########------------Own Methods:----------------##########
+
+    //########------------Own Methods:----------------##########
+    public void displayCorrectSumFormat(){
+        if(getProductionSum() >= 100000){
+            displaySumNoComma.setVisible(true);
+            displaySumWithComma.setVisible(false);
+            setSumTitle("Gesamt (gerundet)");
+        }else{
+            displaySumNoComma.setVisible(false);
+            displaySumWithComma.setVisible(true);
+            setSumTitle("Gesamt");
+        }
+    }
 
     public void keyPressedCheck(KeyEvent key, int valNr)
     {
-        System.out.println(key.getCode());
         switch (key.getCode())
         {
             case UP:
@@ -727,7 +735,6 @@ public class GummibaerenDashboard extends Region {
         {
             case 1:
                 if (isConvertible1()) {
-                    System.out.println("Was in convert1()");
                     if(getUserFacingString1().equals("t")){
                         setProductionValue1(0);
                         setProductionValue1(1000);
@@ -740,7 +747,6 @@ public class GummibaerenDashboard extends Region {
                 break;
             case 2:
                 if (isConvertible2()) {
-                    System.out.println("Was in convert2()");
                     if(getUserFacingString2().equals("t")){
                         setProductionValue2(0);
                         setProductionValue2(1000);
@@ -753,7 +759,6 @@ public class GummibaerenDashboard extends Region {
                 break;
             case 3:
                 if (isConvertible3()) {
-                    System.out.println("Was in convert3()");
                     if(getUserFacingString3().equals("t")){
                         setProductionValue3(0);
                         setProductionValue3(1000);
@@ -766,7 +771,6 @@ public class GummibaerenDashboard extends Region {
                 break;
             case 4:
                 if (isConvertible4()) {
-                    System.out.println("Was in convert4()");
                     if(getUserFacingString4().equals("t")){
                         setProductionValue4(0);
                         setProductionValue4(1000);
@@ -913,11 +917,15 @@ public class GummibaerenDashboard extends Region {
         boolean newValueValid1 = false;
         boolean newValueValid2 = false;
         double newprodVal = 0.0;
+
+        if(Pattern.matches(CONVERTIBLE_REGEX, newValue)){
+            newprodVal = Double.valueOf(newValue);
+        }
+
         //valid/invalid status:
-        if(newValue.equals("t") || newValue.equals("h") || Pattern.matches(CONVERTIBLE_REGEX, newValue)){
+        if(newprodVal <= 99999 && Pattern.matches(CONVERTIBLE_REGEX, newValue) || newValue.equals("t") || newValue.equals("h")){
             newValueValid1 = true;
             if(Pattern.matches(CONVERTIBLE_REGEX, newValue)){
-                newprodVal = Double.valueOf(newValue);
                 newValueValid2 = true;
             }
         }
@@ -977,7 +985,7 @@ public class GummibaerenDashboard extends Region {
         onTransition.stop();  // wenn schon gestoppt macht diese Methode stop() garnichts
         offTransition.stop();
 
-        if(getSwitchOn()){
+        if(getSwitchOff()){
             //thumb.setLayoutX(16);
             onTransition.play();
             setNight(true);
@@ -1434,15 +1442,15 @@ public class GummibaerenDashboard extends Region {
     }
 
     public String getSumTitle() {
-        return SumTitle.get();
+        return sumTitle.get();
     }
 
     public StringProperty sumTitleProperty() {
-        return SumTitle;
+        return sumTitle;
     }
 
     public void setSumTitle(String sumTitle) {
-        this.SumTitle.set(sumTitle);
+        this.sumTitle.set(sumTitle);
     }
 
     //- Rankging Value
@@ -1498,16 +1506,16 @@ public class GummibaerenDashboard extends Region {
 
     //- Switch Control
 
-    public boolean getSwitchOn() {
-        return switchOn.get();
+    public boolean getSwitchOff() {
+        return switchOff.get();
     }
 
-    public BooleanProperty switchOnProperty() {
-        return switchOn;
+    public BooleanProperty switchOffProperty() {
+        return switchOff;
     }
 
-    public void setSwitchOn(boolean switchOn) {
-        this.switchOn.set(switchOn);
+    public void setSwitchOff(boolean switchOff) {
+        this.switchOff.set(switchOff);
     }
 
     public boolean isNight() {
